@@ -206,7 +206,7 @@ export const newCollection = [
   {
     bg: "/bg/bg3.jpg",
     title: "CELEBRATION OF INDIAN HERITAGE TEXTILE",
-    description: "“ Perpetual legacy hard to find.”",
+    description: "“ Perpetual legacy hard to finds.”",
   },
   {
     src: "/candleHolder.png",
