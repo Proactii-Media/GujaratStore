@@ -241,7 +241,7 @@ export const sendMissYouEmail = async (
     <tr>
       <td style="padding: 30px;">
         <h1 style="color: ${EMAIL_CONFIG.BRAND_COLORS.PRIMARY}; text-align: center; margin-top: 0;">
-          👋 We Miss You at ${EMAIL_CONFIG.COMPANY_NAME}
+          👋 We Miss You at server ${EMAIL_CONFIG.COMPANY_NAME}
         </h1>
         
         <p style="font-size: 18px; margin-bottom: 20px; text-align: center; color: #333; font-weight: 500;">
@@ -275,7 +275,7 @@ export const sendMissYouEmail = async (
   const mailOptions = {
     from: `"${EMAIL_CONFIG.COMPANY_NAME}" <${EMAIL_CONFIG.FROM_EMAIL}>`,
     to: userData.email,
-    subject: `We Miss You at ${EMAIL_CONFIG.COMPANY_NAME} 👋`,
+    subject: `We Miss You at server ${EMAIL_CONFIG.COMPANY_NAME} 👋`,
     html: htmlTemplate,
   };
 
