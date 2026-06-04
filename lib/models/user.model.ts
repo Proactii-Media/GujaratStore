@@ -65,8 +65,7 @@ const userSchema = new mongoose.Schema<IUser>({
   isVerified: { type: Boolean, default: false },
 
 emailValid: {
-  type: Boolean,
-  default: true,
+  type: Boolean
 },
 
 campaignSentAt: {
