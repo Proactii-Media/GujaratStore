@@ -16,6 +16,10 @@ declare interface IUser {
   referralUsed?: boolean;
   role: "user";
   isVerified: boolean;
+
+   emailValid?: boolean;
+  campaignSentAt?: Date | null;
+  
   verificationToken?: string;
   verificationTokenExpiry?: Date;
   lastLoginAt?: string | Date;
