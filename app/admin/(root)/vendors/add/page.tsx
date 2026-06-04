@@ -415,7 +415,7 @@ const AddVendorAdminForm = () => {
                           <FormControl>
                             <RegionDropdown
                               country={country}
-                              value={field.value}
+                              value={field.value ?? ""}
                               onChange={field.onChange}
                               defaultOptionLabel="Select a state"
                               className="w-full px-4 py-2 rounded-lg border border-gray-200 bg-white"
