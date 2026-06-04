@@ -195,64 +195,80 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
   setValue,
 }) => {
   // Watch values for automatic calculation - exactly like the original form
-  const mrp = useWatch({
+
+  const mrp =
+  useWatch({
     control,
     name: `productSize.${index}.mrp`,
     defaultValue: 0,
-  });
-  const landingPrice = useWatch({
-    control,
-    name: `productSize.${index}.landingPrice`,
-    defaultValue: 0,
-  });
-  const discountType = useWatch({
-    control,
-    name: `productSize.${index}.discountType`,
-    defaultValue: "percentage",
-  });
-  const discountValue = useWatch({
+  }) ?? 0;
+
+const discountType = useWatch({
+  control,
+  name: `productSize.${index}.discountType`,
+  defaultValue: "percentage",
+}) ?? "percentage";
+
+const discountValue =
+  useWatch({
     control,
     name: `productSize.${index}.discountValue`,
     defaultValue: 0,
-  });
-  const gstType = useWatch({
+  }) ?? 0;
+
+const gstType =
+  useWatch({
     control,
     name: `productSize.${index}.gstType`,
     defaultValue: "exclusive",
-  });
-  const gstRate = useWatch({
+  }) ?? "exclusive";
+
+const gstRate =
+  useWatch({
     control,
     name: `productSize.${index}.gstRate`,
     defaultValue: 0,
-  });
+  }) ?? 0;
+
 
   // Automatic calculation effect - exactly like the original form
-  useEffect(() => {
-    if (!setValue) return; // Early return if setValue is not available
-    
-    const discountedBase =
-      discountType === "percentage"
-        ? mrp - mrp * (discountValue / 100)
-        : mrp - discountValue;
+useEffect(() => {
+  if (!setValue) return;
 
-    const safeDiscountedBase = Math.max(discountedBase || 0, 0);
-    
-    if (gstType === "inclusive") {
-      const gstAmountInclusive =
-        (safeDiscountedBase * (gstRate || 0)) / (100 + (gstRate || 0));
-      
-      // Use setValue for proper form updates
-      setValue(`productSize.${index}.gstAmount`, gstAmountInclusive);
-      setValue(`productSize.${index}.netPrice`, safeDiscountedBase);
-    } else {
-      const calculatedGstAmount = ((mrp || 0) * (gstRate || 0)) / 100;
-      
-      // Use setValue for proper form updates
-      setValue(`productSize.${index}.gstAmount`, calculatedGstAmount);
-      setValue(`productSize.${index}.netPrice`, safeDiscountedBase + calculatedGstAmount);
-    }
-  }, [mrp, discountType, discountValue, gstRate, gstType, setValue, index]);
+  const baseMrp = Number(mrp);
+  const discount = Number(discountValue);
+  const gst = Number(gstRate);
 
+  const discountedBase =
+    discountType === "percentage"
+      ? baseMrp - (baseMrp * discount) / 100
+      : baseMrp - discount;
+
+  const safe = Math.max(discountedBase, 0);
+
+  let gstAmount = 0;
+  let netPrice = 0;
+
+  if (gstType === "inclusive") {
+    const denom = 100 + gst;
+    gstAmount = denom > 0 ? (safe * gst) / denom : 0;
+    netPrice = safe;
+  } else {
+    gstAmount = (safe * gst) / 100;
+    netPrice = safe + gstAmount;
+  }
+
+  setValue(`productSize.${index}.gstAmount`, gstAmount);
+  setValue(`productSize.${index}.netPrice`, netPrice);
+}, [
+  mrp,
+  discountType,
+  discountValue,
+  gstRate,
+  gstType,
+  setValue,
+  index,
+]);
   return (
     <Card className="border-l-4 border-l-brand/20">
       <CardContent className="pt-6">
