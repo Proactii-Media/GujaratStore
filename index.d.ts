@@ -494,7 +494,7 @@ declare interface IProductResponse {
     name: string;
   };
   productSKU: string;
-  productSize?: IProductSizePriceWithDetails[];
+  productSize: IProductSizePriceWithDetails[];
   productColor?: string;
   productDescription: string;
   productImages: (string | File)[];
