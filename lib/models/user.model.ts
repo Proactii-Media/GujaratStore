@@ -7,7 +7,7 @@ const deliveryAddressSchema = new mongoose.Schema({
   contact: { type: String, required: true, minlength: 10 },
   type: { type: String },
   address_line_1: { type: String, required: true },
-  address_line_2: { type: String, required: true },
+address_line_2: { type: String, required: false },
   locality: { type: String, required: true },
   pincode: { type: String, required: true, minlength: 6 },
   state: { type: String, required: true },
@@ -20,16 +20,18 @@ const userSchema = new mongoose.Schema<IUser>({
   email: { type: String, required: true, unique: true },
   phone: {
     type: String,
-    required: function () {
+    required: function ( this : any ) {
       return !this.googleId;
     },
     unique: true,
     sparse: true,
   },
   googleId: { type: String, sparse: true },
+
+
   password: {
     type: String,
-    required: function () {
+    required: function ( this : any ) {
       // Only required if not using Google auth
       return !this.googleId;
     },
@@ -61,6 +63,17 @@ const userSchema = new mongoose.Schema<IUser>({
     default: [],
   },
   isVerified: { type: Boolean, default: false },
+
+emailValid: {
+  type: Boolean,
+  default: true,
+},
+
+campaignSentAt: {
+  type: Date,
+  default: null,
+},
+
   verificationToken: String,
   verificationTokenExpiry: Date,
   lastLoginAt: { type: Date },
