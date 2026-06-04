@@ -27,7 +27,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import PriceCalculator from "@/components/PriceCalculator";
 
 interface SizePricingProps {
- control: Control<any>;
+   control: Control<any>;
   sizes: ISizes[];
   onPricingModeChange?: (isSizeBased: boolean) => void;
   setValue?: any;
@@ -42,13 +42,13 @@ const SizePricing: React.FC<SizePricingProps> = ({
   const [isSizeBasedPricing, setIsSizeBasedPricing] = useState(false);
 
   const { fields, append, remove, replace } = useFieldArray({
-     control,
+      control: control as any,
     name: "productSize",
   });
 
   // Watch for existing productSize data to auto-enable size-based pricing
   const existingProductSizes = useWatch({
-    control,
+     control: control as any,   
     name: "productSize",
     defaultValue: [],
   });
@@ -178,7 +178,7 @@ const SizePricing: React.FC<SizePricingProps> = ({
 };
 
 interface SizePriceRowProps {
-  control: Control<IProduct> | Control<any>;
+  control: Control<any>;
   index: number;
   availableSizes: ISizes[];
   sizes: ISizes[];
@@ -196,32 +196,32 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
 }) => {
   // Watch values for automatic calculation - exactly like the original form
   const mrp = useWatch({
-    control,
+    control: control as any,
     name: `productSize.${index}.mrp`,
     defaultValue: 0,
   });
   const landingPrice = useWatch({
-    control,
+    control: control as any,
     name: `productSize.${index}.landingPrice`,
     defaultValue: 0,
   });
   const discountType = useWatch({
-    control,
+    control: control as any,
     name: `productSize.${index}.discountType`,
     defaultValue: "percentage",
   });
   const discountValue = useWatch({
-    control,
+    control: control as any,
     name: `productSize.${index}.discountValue`,
     defaultValue: 0,
   });
   const gstType = useWatch({
-    control,
+    control: control as any,
     name: `productSize.${index}.gstType`,
     defaultValue: "exclusive",
   });
   const gstRate = useWatch({
-    control,
+    control: control as any,
     name: `productSize.${index}.gstRate`,
     defaultValue: 0,
   });
@@ -259,7 +259,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
         {/* Size Selection Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <FormField
-            control={control}
+            control={control as any}
             name={`productSize.${index}.sizeId`}
             render={({ field }) => {
               const currentSizeId = field.value;
@@ -291,7 +291,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
           />
           
           <FormField
-            control={control}
+            control={control as any}
             name={`productSize.${index}.quantity`}
             render={({ field }) => (
               <FormItem>
@@ -327,7 +327,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
         <div className="space-y-4">
           <div className="grid grid-cols-3 gap-6">
             <FormField
-              control={control}
+              control={control as any}
               name={`productSize.${index}.mrp`}
               render={({ field: { onChange, ...field } }) => (
                 <FormItem>
@@ -345,7 +345,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
             />
 
             <FormField
-              control={control}
+              control={control as any}
               name={`productSize.${index}.landingPrice`}
               render={({ field: { onChange, ...field } }) => (
                 <FormItem>
@@ -363,7 +363,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
             />
 
             <FormField
-              control={control}
+              control={control as any}
               name={`productSize.${index}.discountType`}
               render={({ field }) => (
                 <FormItem>
@@ -388,7 +388,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
             />
 
             <FormField
-              control={control}
+              control={control as any}
               name={`productSize.${index}.discountValue`}
               render={({ field: { onChange, ...field } }) => (
                 <FormItem>
@@ -406,7 +406,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
             />
 
             <FormField
-              control={control}
+              control={control as any}
               name={`productSize.${index}.gstRate`}
               render={({ field: { onChange, ...field } }) => (
                 <FormItem>
@@ -434,7 +434,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
             />
 
             <FormField
-              control={control}
+              control={control as any}
               name={`productSize.${index}.gstType`}
               render={({ field }) => (
                 <FormItem>
@@ -459,7 +459,8 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
             />
 
             <FormField
-              control={control}
+            control={control as any}
+              
               name={`productSize.${index}.gstAmount`}
               render={({ field: { onChange, ...field } }) => (
                 <FormItem>
@@ -478,7 +479,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
             />
 
             <FormField
-              control={control}
+              control={control as any}
               name={`productSize.${index}.netPrice`}
               render={({ field: { onChange, ...field } }) => (
                 <FormItem>
@@ -497,7 +498,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
             />
 
             <FormField
-              control={control}
+              control={control as any}
               name={`productSize.${index}.deliveryCharges`}
               render={({ field: { onChange, ...field } }) => (
                 <FormItem>
@@ -515,7 +516,7 @@ const SizePriceRow: React.FC<SizePriceRowProps> = ({
             />
 
             <FormField
-              control={control}
+              control={control as any}
               name={`productSize.${index}.deliveryDays`}
               render={({ field: { onChange, ...field } }) => (
                 <FormItem>
