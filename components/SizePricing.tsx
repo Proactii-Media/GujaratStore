@@ -178,7 +178,7 @@ const { fields, append, remove, replace } = useFieldArray<IProduct>({
 };
 
 interface SizePriceRowProps {
-  control: Control<IProduct> | Control<any>;
+  control: Control<IProduct>;
   index: number;
   availableSizes: ISizes[];
   sizes: ISizes[];
