@@ -246,12 +246,12 @@ export async function getFileById(id: string) {
     const buffer = Buffer.concat(chunks);
 
     // Return file details and buffer
-    return {
-      buffer,
-      _id: file._id,
-      contentType: file.contentType || "application/octet-stream",
-      filename: file.filename,
-    };
+return {
+  buffer,
+  _id: file._id,
+  contentType: (file as any).metadata?.contentType || "application/octet-stream",
+  filename: file.filename,
+};
   } catch (error) {
     console.error("Error retrieving file:", error);
     throw new Error("Failed to retrieve file");
