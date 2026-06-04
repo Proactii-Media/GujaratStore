@@ -2,7 +2,7 @@
 import { getBrandById } from "@/lib/actions/brand.actions";
 import { brandSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,7 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
 import { useToast } from "@/hooks/use-toast";
-import { Types } from "mongoose";
+// import { Types } from "mongoose";
 
 const EditBrandForm = () => {
   // * useStates
@@ -106,10 +106,10 @@ const EditBrandForm = () => {
   // * fetching brand data to populate fields
   useEffect(() => {
     const fetchBrand = async () => {
-      if (!id || !Types.ObjectId.isValid(id as string)) {
-        setIsLoading(false);
-        return;
-      }
+     if (!id || typeof id !== "string") {
+  setIsLoading(false);
+  return;
+}
 
       try {
         const response = await getBrandById(id as string);
@@ -143,9 +143,7 @@ const EditBrandForm = () => {
     fetchBrand();
   }, [id, form]);
 
-  if (isLoading) {
-    <Loader />;
-  }
+if (isLoading) return <Loader />;
 
   return (
     <section className="sm:px-5 md:px-1 lg:px-2">
