@@ -42,7 +42,7 @@
     "embla-carousel-react": "^8.5.1",
     "framer-motion": "^11.15.0",
     "gridfs-stream": "^1.1.1",
-    "inngest": "^3.44.1",
+   "inngest": "^3.54.2"
     "input-otp": "^1.4.1",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
