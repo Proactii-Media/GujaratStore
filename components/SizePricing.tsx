@@ -27,7 +27,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import PriceCalculator from "@/components/PriceCalculator";
 
 interface SizePricingProps {
-  control: Control<IProduct> | Control<any>;
+    control: Control<IProduct>;
   sizes: ISizes[];
   onPricingModeChange?: (isSizeBased: boolean) => void;
   setValue?: any;
@@ -41,10 +41,10 @@ const SizePricing: React.FC<SizePricingProps> = ({
 }) => {
   const [isSizeBasedPricing, setIsSizeBasedPricing] = useState(false);
 
-  const { fields, append, remove, replace } = useFieldArray({
-    control: control,
-    name: "productSize",
-  });
+const { fields, append, remove, replace } = useFieldArray<IProduct>({
+  control,
+  name: "productSize" as const,
+});
 
   // Watch for existing productSize data to auto-enable size-based pricing
   const existingProductSizes = useWatch({
