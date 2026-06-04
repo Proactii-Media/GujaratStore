@@ -24,9 +24,11 @@ export async function POST(request: NextRequest) {
     const filename = `${Date.now()}-${file.name}`;
 
     // Create upload stream
-    const uploadStream = bucket.openUploadStream(filename, {
-      contentType: file.type,
-    });
+ const uploadStream = bucket.openUploadStream(filename, {
+  metadata: {
+    contentType: file.type,
+  },
+});
 
     // Promise to handle stream completion
     const uploadPromise = new Promise<ObjectId>((resolve, reject) => {
