@@ -9,7 +9,7 @@ const AboutUs = () => {
           {/* Page Title */}
           <div className="text-center mb-12">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 font-playfair mb-4">
-              About Us Gujarat
+              About Us
             </h1>
             <div className="w-20 h-1 bg-brand mx-auto"></div>
           </div>
