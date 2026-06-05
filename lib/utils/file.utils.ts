@@ -29,7 +29,7 @@ export async function getFileById(id: string): Promise<FileResponse> {
       downloadStream.on("end", () =>
         resolve({
           buffer: Buffer.concat(chunks),
-          contentType: files[0].contentType || "application/octet-stream",
+          contentType: files[0].contentType || "application/octet-stream"
         })
       );
     });
