@@ -237,6 +237,5 @@ export const sendTemporaryPasswordEmail = async (
 export const sendMissYouEmail = async (userData: any) => {
   console.log("MISS YOU EMAIL FUNCTION CALLED");
   console.log("USER:", userData);
-
   return;
 };
