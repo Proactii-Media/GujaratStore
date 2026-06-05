@@ -3,8 +3,8 @@ import { Document, Schema, Types } from "mongoose";
 import { Control } from "react-hook-form";
 import { z } from "zod";
 
-export interface IBlog extends Document {
-  _id: Types.ObjectId;
+export interface IBlog {
+  _id: String;
   vendorId: string;
   imageId: string;
   user: string;
