@@ -4,7 +4,7 @@ import { Control } from "react-hook-form";
 import { z } from "zod";
 
 export interface IBlog extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   vendorId: string;
   imageId: string;
   user: string;
