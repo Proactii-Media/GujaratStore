@@ -29,7 +29,7 @@ export async function getFileById(id: string) {
     return {
       buffer,
       _id: file._id,
-      contentType: file.contentType || "application/octet-stream",
+     contentType: file.metadata?.contentType || "application/octet-stream",
       filename: file.filename,
     };
   } catch (error) {
