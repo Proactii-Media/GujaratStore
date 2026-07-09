@@ -660,6 +660,8 @@ export const sendOrderEmails = async (orderData: OrderEmailData) => {
     for (const vendorId of vendorIds) {
       const vendorResponse = await VendorService.getVendorById(vendorId!);
 
+
+
       if (vendorResponse.success && vendorResponse.data) {
         // Filter items for this specific vendor
         const vendorItems = orderData.items.filter(

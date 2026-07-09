@@ -1,21 +1,90 @@
 import nodemailer from "nodemailer";
+import dns from "node:dns/promises";
+import validator from "validator";
 
 export const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-export const sendEmailOTP = async (email: string, otp: string) => {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT || "587"),
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASSWORD,
-    },
-  });
+// Email format validation
+const isValidEmailFormat = (email: string) => {
+  return validator.isEmail(email);
+};
 
-  const emailTemplate = `
-    <!DOCTYPE html>
+// Strong email verification
+const verifyEmail = async (email: string) => {
+  try {
+    // Check format
+    if (!isValidEmailFormat(email)) {
+      return {
+        status: "invalid",
+      };
+    }
+
+    const domain = email.split("@")[1];
+
+    // Check MX records
+    const mxRecords = await dns.resolveMx(domain);
+
+    if (!mxRecords || mxRecords.length === 0) {
+      return {
+        status: "invalid",
+      };
+    }
+
+    // Check if MX hosts actually exist
+    for (const mx of mxRecords) {
+      try {
+        await dns.resolve(mx.exchange);
+      } catch {
+        return {
+          status: "invalid",
+        };
+      }
+    }
+
+    return {
+      status: "valid",
+    };
+  } catch (error) {
+    return {
+      status: "invalid",
+    };
+  }
+};
+
+export const sendEmailOTP = async (
+  email: string,
+  otp: string
+) => {
+  try {
+    // Validate email
+    const validation = await verifyEmail(email);
+
+    if (validation.status !== "valid") {
+      return {
+        success: false,
+        message: "Invalid or inactive email address",
+      };
+    }
+
+    // Create transporter
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || "587"),
+      secure: false,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+
+    // Email template
+    const emailTemplate = `
+  <!DOCTYPE html>
     <html>
       <head>
         <meta charset="utf-8">
@@ -68,10 +137,25 @@ export const sendEmailOTP = async (email: string, otp: string) => {
     </html>
   `;
 
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM,
-    to: email,
-    subject: "Verify your email - The Gujarat Store",
-    html: emailTemplate,
-  });
+    // Send email
+    await transporter.sendMail({
+      from: process.env.SMTP_FROM,
+      to: email,
+      subject: "Verify your email - The Gujarat Store",
+      html: emailTemplate,
+    });
+
+    return {
+      success: true,
+      message: "OTP sent successfully",
+    };
+
+  } catch (error) {
+    console.log("EMAIL ERROR:", error);
+
+    return {
+      success: false,
+      message: "Failed to send email",
+    };
+  }
 };

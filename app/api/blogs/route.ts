@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { BlogService } from "@/services/blog.service";
+import error from "@/app/error";
 
 export async function GET(request: NextRequest) {
   try {
@@ -35,11 +36,22 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Error in GET blogs:", error);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: error instanceof Error ? error.message : "Internal server error"
       },
       { status: 500 }
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -89,7 +89,7 @@ export function withAdminOrVendorAuth(
             return handler(request, ...args);
           }
         } catch {
-          // Admin token invalid, continue to check vendor auth
+          // Admin token invalid, co  ntinue to check vendor auth
         }
       }
 

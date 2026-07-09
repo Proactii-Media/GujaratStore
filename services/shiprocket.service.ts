@@ -23,7 +23,7 @@ export type {
 
 export class ShiprocketService {
   private static instance: ShiprocketService;
-  private backend = process.env.NEXT_PUBLIC_SHIPROCKET_BACKEND_URL || process.env.SHIPROCKET_BACKEND_URL || "http://localhost:8000";
+  private backend = process.env.NEXT_PUBLIC_SHIPROCKET_BACKEND_URL || process.env.SHIPROCKET_BACKEND_URL || "http://localhost:3000";
 
   private async fetchJSON<T>(path: string, init?: RequestInit): Promise<T> {
     const url = `${this.backend}${path}`;

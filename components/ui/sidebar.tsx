@@ -426,7 +426,7 @@ const SidebarGroup = React.forwardRef<
     />
   );
 });
-SidebarGroup.displayName = "SidebarGroup";
+SidebarGroup.displayName = "SidebarG  roup";
 
 const SidebarGroupLabel = React.forwardRef<
   HTMLDivElement,

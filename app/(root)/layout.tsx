@@ -38,8 +38,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </GuestProvider>
           </ParallaxProvider>
         </SessionProvider>
-      </body>
-    </html>
+       </body>
+     </html>
   );
 };
 

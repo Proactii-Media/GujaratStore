@@ -2,11 +2,17 @@
 import Razorpay from "razorpay";
 import crypto from "crypto";
 
+
+
+
+
 // Razorpay Configuration
 const razorpayInstance = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID!,
   key_secret: process.env.RAZORPAY_KEY_SECRET!,
 });
+
+
 
 // Types
 export interface RazorpayOrderOptions {
@@ -56,9 +62,19 @@ export interface WebhookEvent {
 export class RazorpayService {
   /**
    * Create a Razorpay order
+   * 
+   * 
    */
+
+  
   static async createOrder(options: RazorpayOrderOptions): Promise<ActionResponse<RazorpayOrder>> {
     try {
+
+      
+
+      console.log("Razorpay Options", options);
+
+
       // Validate inputs
       if (!options.amount || options.amount <= 0) {
         return {
@@ -86,6 +102,8 @@ export class RazorpayService {
       };
 
       const order = await razorpayInstance.orders.create(orderOptions);
+
+      console.log("Created Order:", order);
 
       return {
         success: true,
@@ -492,7 +510,7 @@ export class RazorpayService {
    */
   private static async handleOrderPaid(orderData: any): Promise<ActionResponse<any>> {
     try {
-      console.log("Order paid:", orderData);
+      // console.log("Order paid:", orderData);
       
       // You can implement custom logic here
       // For example, mark order as paid, trigger fulfillment, etc.

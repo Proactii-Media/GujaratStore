@@ -5,7 +5,7 @@ import Order from "@/lib/models/order.model";
 import User from "@/lib/models/user.model";
 import { sendShippingNotificationEmail } from "@/lib/workflows/emails/shipping/shippingEmails";
 
-const BACKEND_URL = process.env.SHIPROCKET_BACKEND_URL || "http://localhost:8000";
+const BACKEND_URL = process.env.SHIPROCKET_BACKEND_URL || "http://localhost:3000";
 
 interface RouteParams {
   params: Promise<{

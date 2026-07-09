@@ -170,13 +170,16 @@ body {
 .product-main-swiper .swiper-button-next,
 .product-main-swiper .swiper-button-prev {
   color: #C93326;
-  width: 30px;
-  height: 30px;
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 17px;
 }
 
 .product-main-swiper .swiper-button-next:after,
 .product-main-swiper .swiper-button-prev:after {
-  font-size: 20px;
+  font-size: 13px;
 }
 
 .thumbs-gallery {

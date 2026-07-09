@@ -217,14 +217,15 @@ const SimilarProducts = () => {
                     <div className="mb-4 h-40 w-full overflow-hidden rounded-lg">
                       <Link
                         prefetch
-                        href={`/${product.parentCategory?.name}/${product.slug}`}
+                        // href={`/${product.parentCategory?.name}/${product.slug}`}
+                        href= {`/product/${product.slug}`}
                       >
                         <Image
                           src={getImageUrl(product.productCoverImage)}
                           alt={product.productName}
                           width={200}
                           height={200}
-                          className="h-full w-full object-cover object-top transition-transform duration-300 hover:scale-105"
+                          className="h-full w-full object-contain object-top transition-transform duration-300 hover:scale-105"
                         />
                       </Link>
                     </div>
@@ -232,7 +233,8 @@ const SimilarProducts = () => {
                     {/* Product Info */}
                     <Link
                       prefetch
-                      href={`/${product.parentCategory?.name}/${product.slug}`}
+                      // href={`/${product.parentCategory?.name}/${product.slug}`}
+                      href= {`/product/${product.slug}`}
                       className="w-full"
                     >
                       <div className="flex w-full flex-1 flex-col items-center">

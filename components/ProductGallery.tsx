@@ -64,10 +64,10 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
           watchSlidesProgress={true}
           modules={[FreeMode, Navigation, Thumbs]}
           className="thumbs-gallery"
-        >
+        > 
           {allImages.map((img, index) => (
             <SwiperSlide key={index} className="cursor-pointer">
-              <div className="relative w-20 h-20">
+              <div className="relative w-20 h-20 border-brand border-2 rounded-xl overflow-hidden " >
                 <Image
                   src={getImageSrc(img)}
                   alt={`Thumbnail ${index + 1}`}

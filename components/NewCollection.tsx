@@ -4,12 +4,54 @@ import Image from "next/image";
 import { newCollection } from "@/constants";
 import { Button } from "./ui/button";
 // import Link from "next/link";
+import { flavoursOfGujarat } from "@/constants";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+
 
 const isImageItem = (item: ImageItem | ContentItem): item is ImageItem => {
   return "src" in item && "label" in item;
 };
+
+;
+
+  // * Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
+  const titleVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
+
+
+
 
 const CollectionItem: React.FC<CollectionItemProps> = ({
   item,
@@ -151,6 +193,30 @@ const CollectionItem: React.FC<CollectionItemProps> = ({
 };
 
 const NewCollection: React.FC = () => {
+
+
+
+  // * Refs for different sections
+  const [titleRef, titleInView] = useInView({
+    threshold: 0.3,
+    triggerOnce: true,
+  });
+  const [organicRef, organicInView] = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
+  const [flavoursRef, flavoursInView] = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
+
+
+
+
+
+
+
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -252,40 +318,139 @@ const NewCollection: React.FC = () => {
             </React.Fragment>
           ))}
         </div>
-      </div>
-      <motion.div
-        className="relative min-h-[180px] w-full sm:min-h-[220px] md:min-h-[600px]"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="absolute inset-0 bg-[url('/bg/bg4.jpg')] bg-cover bg-no-repeat" />
-        <div className="absolute inset-0 bg-black/70" />
 
-        <div className="relative text-white flex h-full flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8">
-          <motion.h1
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="h1 mb-2 text-2xl sm:text-3xl md:text-8xl mt-14 sm:mt-44 font-playfair"
-          >
-            THE GUJARAT STORE
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-sm sm:text-base md:text-2xl font-bold sm:mt-8 mt-0 text-brand"
-          >
-            ગુજરાત થી તમારા ઘર આંગણે.
-          </motion.p>
-        </div>
-      </motion.div>
+
+ {/* Flavours Section */}
+        <motion.div 
+          ref={flavoursRef}
+          variants={containerVariants}
+          initial="hidden"
+          animate={flavoursInView ? "visible" : "hidden"}
+          className="flex-center flex-col  dynamic-container mx-auto px-4 py-16"
+        >
+          <div className="flex items-center gap-3 mb-4 ">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: "2rem" }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="h-px bg-black"
+            />
+            <h2 className="text-lg">સ્વાદ આખા ગુજરાતનો</h2>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: "2rem" }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="h-px bg-black"
+            />
+          </div>
+          <div className="flex items-center gap-2 mb-12">
+            <Image
+              src="/decoration.svg"
+              alt="decoration"
+              width={24}
+              height={24}
+            />
+            <h1 className="text-2xl font-bold">FLAVOURS OF GUJARAT</h1>
+            <Image
+              src="/decoration.svg"
+              alt="decoration"
+              width={24}
+              height={24}
+            />
+          </div>
+
+          <div className="flex flex-col lg:flex-row gap-8 w-full">
+            <motion.div
+              variants={itemVariants}
+              className="relative w-full lg:w-[340px] h-[300px] lg:h-[528px]"
+              whileHover={{ scale: 1.02 }}
+            >
+              <Image
+                src="/food/puri.jpg"
+                alt="puri"
+                height={500}
+                width={500}
+                className="h-full w-full lg:w-[259px] object-cover"
+              />
+              <motion.div
+                className="absolute inset-0 bg-brand/30 flex flex-col justify-center items-center text-white"
+                whileHover={{ backgroundColor: "#C93326" }}
+              >
+                <p className="font-bold text-2xl lg:-ml-16">“સ્વાદ આખા</p>
+                <p className="text-4xl lg:text-6xl font-bold">
+                  ગુજરાત <span className="text-xl lg:text-2xl">નો”</span>
+                </p>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button
+                    variant="outline"
+                    className="mt-4 text-brand border-brand w-44 hover:bg-brand hover:text-white"
+                    asChild
+                  >
+                    <Link prefetch href="/">  
+                      Explore
+                    </Link>
+                  </Button>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-10 w-full">
+              {flavoursOfGujarat.map((item, index) => (
+                <motion.div
+                  key={index}
+                  
+                  variants={itemVariants}
+                  className="relative w-full mx-auto"
+                  whileHover={{ y: -10 }}
+                >
+                  
+                  <Image
+                  
+                  
+                    src={item.src}
+                    alt={item.label}
+                    height={500}
+                    width={500}
+                    className="object-cover w-full sm:w-[259px] h-[220px]"
+                  />
+                  <motion.div
+                    className="absolute bottom-0 left-0 lg:left-6 bg-brand text-white w-full lg:w-[215px] h-[45px] flex-center py-2 px-4"
+                    whileHover={{ height: "50px" }}
+                  >
+                    <Link prefetch href="/"> 
+                    <p className="text-center font-medium text-sm">
+                      {item.label}
+                    </p>
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+
+
+        
+
+
+
+
+
+
+
+
+
+      </div>
+      
     </section>
   );
 };
+
 
 export default NewCollection;

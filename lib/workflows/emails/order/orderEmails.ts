@@ -53,8 +53,8 @@ export const sendOrderConfirmationEmail = async (
         <div style="background-color: ${
           EMAIL_CONFIG.BRAND_COLORS.SECONDARY
         }; border-radius: 6px; padding: 20px; margin: 30px 0; text-align: center;">
-          <h3 style="margin: 0 0 10px; color: #333;">What's Next?</h3>
-          <p style="margin: 0; color: #666; font-size: 14px;">
+          <h3 style="margin: 0 0 10px; color: #ffffff;">What's Next?</h3>
+          <p style="margin: 0; color: #ffffff; font-size: 14px;">
             We'll send you another email with tracking information once your order ships. 
             You can also track your order status anytime in your account.
           </p>

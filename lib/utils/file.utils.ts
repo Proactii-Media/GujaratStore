@@ -29,6 +29,10 @@ export async function getFileById(id: string): Promise<FileResponse> {
       downloadStream.on("end", () =>
         resolve({
           buffer: Buffer.concat(chunks),
+<<<<<<< HEAD
+=======
+          // contentType: files[0].contentType || "application/octet-stream",
+>>>>>>> 13c8f9d (Some UI changes and added Razorpay and Shiprocket integration)
           contentType: files[0].metadata?.contentType || "application/octet-stream",
         })
       );

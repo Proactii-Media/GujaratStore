@@ -19,10 +19,45 @@ const populateConfig = [
   { path: "productReviews", select: "rating" },
 ];
 
+// export const POST = withAdminAuth(async (request: Request) => {
+//   try {
+//     await connectToDB();
+//     const body = await request.json();
+//      console.log('Received data:', body); 
+
+
+//     const newProduct = new Products(body);
+//     await newProduct.save();
+
+//     return NextResponse.json(
+//       { success: true, data: newProduct },
+//       { status: 201 }
+//     );
+//   } catch (error: unknown) {
+//     return NextResponse.json(
+//       { success: false, error: (error as Error).message },
+//       { status: 400 }
+//     );
+//   }
+// });
+
+
 export const POST = withAdminAuth(async (request: Request) => {
   try {
     await connectToDB();
     const body = await request.json();
+    console.log('Received data:', body); 
+    console.log('Does slug exist?', !!body.slug);
+    console.log('slug value:', body.slug);
+    console.log('All keys:', Object.keys(body));
+    
+    // Manually add slug if missing
+    if (!body.slug) {
+      body.slug = body.productName 
+        ? body.productName.toLowerCase().replace(/\s+/g, '-')
+        : `product-${Date.now()}`;
+      console.log('Added slug:', body.slug);
+    }
 
     const newProduct = new Products(body);
     await newProduct.save();
@@ -32,12 +67,16 @@ export const POST = withAdminAuth(async (request: Request) => {
       { status: 201 }
     );
   } catch (error: unknown) {
+    console.error('Error:', error);
     return NextResponse.json(
       { success: false, error: (error as Error).message },
       { status: 400 }
     );
   }
 });
+
+
+
 
 export const GET = withAdminAuth(async (request: NextRequest) => {
   try {

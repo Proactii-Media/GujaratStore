@@ -6,24 +6,116 @@ import { connectToDB } from "@/lib/mongodb";
 import { Address } from "@/lib/validations";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
-import { z } from "zod";
-import { Document } from "mongoose";
 
-// * Add the address
-export async function addAddress(address: IAddress) {
+// ----------------------------------------------------------------------
+// Internal pincode validation – works for both array and object responses
+// ----------------------------------------------------------------------
+async function getPincodeData(pincode: string) {
+  const url = `http://www.postalpincode.in/api/pincode/${pincode}`;
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) {
+      console.error(`[PINCODE] HTTP ${res.status}`);
+      return { ok: false };
+    }
+
+    const text = await res.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      console.error("[PINCODE] JSON parse error", e);
+      return { ok: false };
+    }
+
+    // Normalise response to an array of results
+    let results = null;
+    if (Array.isArray(data) && data.length > 0) {
+      results = data;
+    } else if (data && typeof data === "object" && data.Status) {
+      results = [data];
+    } else {
+      console.error("[PINCODE] Unexpected shape", data);
+      return { ok: false };
+    }
+
+    const firstResult = results[0];
+    if (firstResult.Status !== "Success") {
+      console.error("[PINCODE] Status not Success");
+      return { ok: false };
+    }
+
+    const postOffices = firstResult.PostOffice;
+    if (!postOffices || postOffices.length === 0) {
+      console.error("[PINCODE] No PostOffice array");
+      return { ok: false };
+    }
+
+    const po = postOffices[0];
+    return {
+      ok: true,
+      state: po.State,
+      district: po.District,
+      city: po.Region,
+    };
+  } catch (err) {
+    console.error("[PINCODE] Fetch exception:", err);
+    return { ok: false };
+  }
+}
+
+// ----------------------------------------------------------------------
+// ADD ADDRESS
+// ----------------------------------------------------------------------
+export async function addAddress(address: any) {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
       return { success: false, message: "Not authenticated" };
     }
 
-    const validatedAddress = Address.parse(address);
+    const validated = Address.parse(address);
+
+    const location = await getPincodeData(validated.pincode);
+    if (!location.ok) {
+      return { success: false, message: "Invalid or unrecognized pincode" };
+    }
+
+    // Optional: state mismatch check on backend
+    if (validated.state.toLowerCase() !== location.state.toLowerCase()) {
+      return {
+        success: false,
+        message: `State mismatch: "${validated.state}" does not match pincode's state "${location.state}"`,
+      };
+    }
+
+    const finalAddress = {
+      ...validated,
+      state: location.state,        // use official state
+      locality: location.city,
+    };
+
+    // After getting location
+if (validated.state.toLowerCase() !== location.state.toLowerCase()) {
+  return {
+    success: false,
+    message: `State mismatch: "${validated.state}" does not match pincode's state "${location.state}"`,
+  };
+}
+
+// Add district check (if the user provided a district)
+if (validated.district && validated.district.toLowerCase() !== location.district.toLowerCase()) {
+  return {
+    success: false,
+    message: `District mismatch: "${validated.district}" does not match pincode's district "${location.district}"`,
+  };
+}
 
     await connectToDB();
 
     const user = await User.findOneAndUpdate(
       { email: session.user.email },
-      { $push: { addresses: validatedAddress } },
+      { $push: { addresses: finalAddress } },
       { new: true }
     );
 
@@ -32,95 +124,96 @@ export async function addAddress(address: IAddress) {
     }
 
     revalidatePath("/profile");
-    // Also drop user cache to reflect address immediately in client hooks
-    try {
-      const { CacheService } = await import("@/services/cache.service");
-      const keys = await CacheService.keys("users:*");
-      await Promise.all(keys.map((k) => CacheService.delete(k)));
-    } catch (e) {
-      console.error("Address add cache invalidation error", e);
-    }
 
-    // * Convert addresses to a serializable format
-    const addresses = user.addresses.map((addr: Document & IAddress) => ({
-      ...addr.toObject(), // * Convert Mongoose document to plain object
-      _id: addr._id ? addr._id.toString() : "",
-    }));
-
-    return { success: true, addresses };
-  } catch (error: unknown) {
-    if (error instanceof z.ZodError) {
-      return { success: false, message: "Invalid address data" };
-    }
-    return { success: false, message: "Failed to add address" };
+    return {
+      success: true,
+      addresses: user.addresses.map((a: any) => ({
+        ...a.toObject(),
+        _id: a._id.toString(),
+      })),
+    };
+  } catch (error: any) {
+    console.error("Add address error:", error);
+    return { success: false, message: error.message || "Failed to add address" };
   }
 }
 
-// * update the address
-export async function updateAddress(addressId: string, address: IAddress) {
+// ----------------------------------------------------------------------
+// UPDATE ADDRESS
+// ----------------------------------------------------------------------
+export async function updateAddress(addressId: string, address: any) {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
       return { success: false, message: "Not authenticated" };
     }
 
-    const validatedAddress = Address.parse(address);
+    let validated;
+    try {
+      validated = Address.parse(address);
+    } catch (zodError: any) {
+      console.error("Zod validation error:", zodError);
+      return {
+        success: false,
+        message: `Validation error: ${zodError.errors?.map((e: any) => e.message).join(", ") || "Invalid address data"}`,
+      };
+    }
+
+    const location = await getPincodeData(validated.pincode);
+    if (!location.ok) {
+      return { success: false, message: `Invalid or unrecognized pincode: ${validated.pincode}` };
+    }
+
+    // State mismatch check on backend
+    if (validated.state.toLowerCase() !== location.state.toLowerCase()) {
+      return {
+        success: false,
+        message: `State mismatch: "${validated.state}" does not match pincode's state "${location.state}"`,
+      };
+    }
+
+    const finalAddress = {
+      ...validated,
+      state: location.state,
+      locality: location.city,
+    };
 
     await connectToDB();
 
-    // * Use the correct query to find the user and update the specific address
     const user = await User.findOneAndUpdate(
       {
         email: session.user.email,
-        "addresses._id": addressId, // * Ensure this matches the address ID
+        "addresses._id": addressId,
       },
-      {
-        $set: {
-          "addresses.$._id": validatedAddress._id,
-          "addresses.$.name": validatedAddress.name,
-          "addresses.$.contact": validatedAddress.contact,
-          "addresses.$.type": validatedAddress.type,
-          "addresses.$.address_line_1": validatedAddress.address_line_1,
-          "addresses.$.address_line_2": validatedAddress.address_line_2,
-          "addresses.$.locality": validatedAddress.locality,
-          "addresses.$.pincode": validatedAddress.pincode,
-          "addresses.$.state": validatedAddress.state,
-          "addresses.$.landmark": validatedAddress.landmark,
-          "addresses.$.alternativeContact": validatedAddress.alternativeContact,
-        },
-      },
+      { $set: { "addresses.$": finalAddress } },
       { new: true }
     );
 
     if (!user) {
-      return { success: false, message: "User or address not found" };
+      return { success: false, message: "Address not found or does not belong to this user" };
     }
 
     revalidatePath("/profile");
-    try {
-      const { CacheService } = await import("@/services/cache.service");
-      const keys = await CacheService.keys("users:*");
-      await Promise.all(keys.map((k) => CacheService.delete(k)));
-    } catch (e) {
-      console.error("Address update cache invalidation error", e);
-    }
 
-    // Convert addresses to a serializable format
-    const addresses = user.addresses.map((addr: Document & IAddress) => ({
-      ...addr.toObject(),
-      _id: addr._id ? addr._id.toString() : "",
-    }));
-
-    return { success: true, addresses };
-  } catch (error: unknown) {
-    if (error instanceof z.ZodError) {
-      return { success: false, message: "Invalid address data" };
-    }
-    return { success: false, message: "Failed to update address" };
+    return {
+      success: true,
+      addresses: user.addresses.map((a: any) => ({
+        ...a.toObject(),
+        _id: a._id.toString(),
+      })),
+    };
+  } catch (error: any) {
+    console.error("Unexpected error in updateAddress:", error);
+    return {
+      success: false,
+      message: error.message || "Unknown server error",
+    };
   }
 }
 
-// * delete address
+// ----------------------------------------------------------------------
+// DELETE ADDRESS
+// ----------------------------------------------------------------------
 export async function deleteAddress(addressId: string) {
   try {
     const session = await getServerSession(authOptions);
@@ -130,26 +223,16 @@ export async function deleteAddress(addressId: string) {
 
     await connectToDB();
 
-    const user = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { email: session.user.email },
-      { $pull: { addresses: { _id: addressId } } }, // * Using $pull to remove from array
-      { new: true }
+      { $pull: { addresses: { _id: addressId } } }
     );
 
-    if (!user) {
-      return { success: false, message: "User not found" };
-    }
-
     revalidatePath("/profile");
-    try {
-      const { CacheService } = await import("@/services/cache.service");
-      const keys = await CacheService.keys("users:*");
-      await Promise.all(keys.map((k) => CacheService.delete(k)));
-    } catch (e) {
-      console.error("Address delete cache invalidation error", e);
-    }
+
     return { success: true };
-  } catch {
+  } catch (error) {
+    console.error("Delete address error:", error);
     return { success: false, message: "Failed to delete address" };
   }
 }

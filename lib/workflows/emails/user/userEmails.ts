@@ -231,6 +231,7 @@ export const sendTemporaryPasswordEmail = async (
   console.log(`Temporary password email sent to ${userData.email}`);
 };
 
+<<<<<<< HEAD
 /**
  * Send "We miss you" email to inactive users
  */
@@ -239,3 +240,13 @@ export const sendMissYouEmail = async (userData: any) => {
   console.log("USER:", userData);
   return;
 };
+=======
+
+
+export const sendMissYouEmail = async (userData: any) => {
+  // console.log("MISS YOU EMAIL FUNCTION CALLED");
+  console.log("USER:", userData);
+
+  return;
+};
+>>>>>>> 13c8f9d (Some UI changes and added Razorpay and Shiprocket integration)

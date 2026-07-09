@@ -583,8 +583,10 @@ const PickupAddressManager: React.FC<PickupAddressManagerProps> = ({
                   className="mt-1"
                 />
               </div>
+
+      
               <div>
-                <Label htmlFor="state">State *</Label>
+                <Label htmlFor="state">State*</Label>
                 <RegionDropdown
                   country={"India"}
                   value={formData.state}

@@ -1,5 +1,32 @@
 import { z } from "zod";
 
+
+export const testimonialSchema = z.object({
+  imageId: z.string().optional(),
+author: z.string().min(2, "Author name is required"),
+position: z.string().min(2, "Position is required"),
+quote: z.string().min(10, "Quote must be at least 10 characters"),
+productType: z.string().min(2, "Product type is required"),
+rating: z.coerce
+  .number()
+  .min(1, "Rating must be at least 1")
+  .max(5, "Rating cannot be more than 5"),
+review: z.string().optional(),
+  isApproved: z.boolean().optional(),
+});
+
+
+
+export const heroSliderSchema = z.object({
+  imageId: z.string().min(1, "Image ID is required"),
+  title: z.string().min(1, "Title is required"),
+  boldtitle: z.string().min(1, "Bold title is required"),
+  gujratititle: z.string().min(1, "Gujarati title is required"),
+  isApproved: z.boolean().default(true),
+});
+
+
+
 export type FormType = "sign-in" | "sign-up";
 export const authFormSchema = (formType: FormType) => {
   return z
@@ -79,25 +106,27 @@ export const blogSchema = z.object({
   metaKeywords: z.string().optional(),
 });
 
+
 export const Address = z.object({
   _id: z.string().optional(),
   name: z.string().min(2, "Name is too short"),
   contact: z
     .string()
-    .regex(/^[0-9]+$/, "Contact number must contain only numbers")
-    .max(10, "Only 10 digits are allowed"),
-  type: z.string(),
+    .regex(/^[0-9]{10}$/, "Contact number must be exactly 10 digits"),
+  type: z.string().optional(),              
   address_line_1: z.string().min(1, "Address line 1 is required"),
-  address_line_2: z.string().min(1, "Address line 2 is required"),
+  address_line_2: z.string().optional(),     
   locality: z.string().min(1, "Locality is required"),
+  district: z.string().optional(),
   pincode: z
     .string()
-    .regex(/^[0-9]+$/, "Contact number must contain only numbers")
-    .max(6, "Pincode should be only 6 digits"),
+    .regex(/^[1-9][0-9]{5}$/, "Pincode must be a 6-digit number (cannot start with 0)"),
   state: z.string().min(1, "State is required"),
   landmark: z.string().optional(),
   alternativeContact: z.string().optional(),
 });
+
+
 
 export const storeAddressSchema = z.object({
   // Shiprocket requires House/Flat/Road number in Address line 1
@@ -815,3 +844,5 @@ export const businessIdentitySchema = z.object({
   CorporationCertificate: z.string().optional(),
   OtherDocuments: z.string().optional(),
 });
+
+

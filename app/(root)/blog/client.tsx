@@ -82,7 +82,7 @@ const ClientFeaturesAndBlogs = ({ initialBlog }: any) => {
               width={24}
               height={24}
             />
-            BLOGS
+            BLOGS 
             <Image
               src="/decoration.svg"
               alt="decoration"

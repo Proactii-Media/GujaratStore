@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { withAdminOrVendorAuth } from "@/lib/middleware/auth";
 
 const BACKEND_URL =
-  process.env.SHIPROCKET_BACKEND_URL || "http://localhost:8000";
+  process.env.SHIPROCKET_BACKEND_URL || "http://localhost:3000";
 
 export const POST = withAdminOrVendorAuth(async (request: Request) => {
   try {

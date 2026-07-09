@@ -3,7 +3,11 @@ import { Document, Schema, Types } from "mongoose";
 import { Control } from "react-hook-form";
 import { z } from "zod";
 
+<<<<<<< HEAD
 export interface IBlog {
+=======
+export interface IBlog  {
+>>>>>>> 13c8f9d (Some UI changes and added Razorpay and Shiprocket integration)
   _id: String;
   vendorId: string;
   imageId: string;
@@ -106,4 +110,87 @@ export interface IAdminReferral {
   updatedAt: Date | string;
 }
 
-// Interfaces for different dashboard metrics
+
+
+// Pagination Types (if not already defined)
+export interface PaginationParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+}
+
+export interface PaginationInfo {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+}
+
+export interface PaginatedResponse<T> {
+  success: boolean;
+  data: T[];
+  pagination: PaginationInfo;
+  error?: string;
+}
+
+
+export interface IHeroSlider {
+  _id: Types.ObjectId;
+  imageId: string;
+  title: string;
+  boldtitle: string;
+  gujratititle: string;
+  isApproved: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IHeroSliderInput {
+  imageId: string;
+  title: string;
+  boldtitle: string;
+  gujratititle: string;
+  isApproved?: boolean;
+}
+
+export interface TransformedHeroslider {
+  _id: string;
+  imageId: string;
+  title: string;
+  boldtitle: string;
+  gujratititle: string;
+  isApproved: boolean;
+  createdAt?: string;
+}
+
+
+
+// Testimonial Types
+export interface ITestimonial {
+  _id?: Types.ObjectId;
+  name: string;
+  product: string;
+  rating: number;
+  review: string;
+  category: string;
+  isApproved: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+
+export interface TransformedTestimonial {
+  _id: string;
+  author: string;
+  position?: string;
+  quote: string;
+  productType: string;
+  rating: number;
+  imageId?: string;
+  isApproved: boolean;
+  createdAt?: string;
+}

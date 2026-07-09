@@ -13,6 +13,7 @@ import {
 
 import { getAllDropdownData } from "@/lib/actions/dropdown.actions";
 import React, { useEffect, useMemo, useState } from "react";
+import { Control, FieldPath, UseFormSetValue } from "react-hook-form";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -64,6 +65,7 @@ const AddProductsForm = () => {
   const form = useForm<IProduct>({
     resolver: zodResolver(adminProductSchema),
     defaultValues: {
+      
       productName: "",
       slug: "",
       parentCategory: "",
@@ -685,7 +687,7 @@ const AddProductsForm = () => {
 
         {/* Pricing Configuration */}
         <SizePricing
-          control={form.control}
+            control={form.control as Control<IProduct>}
           sizes={sizes}
           setValue={form.setValue}
         />

@@ -81,8 +81,13 @@ const AddressDialog: React.FC<AddressDialogProps> = ({
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+        <form
+            onSubmit={form.handleSubmit(async (data) => {
+              await onSubmit(data);
+            })}
+            className="space-y-4"
+          >
+                      <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="name"
@@ -160,7 +165,7 @@ const AddressDialog: React.FC<AddressDialogProps> = ({
                 name="address_line_2"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>City/District/Town*</FormLabel>
+                    <FormLabel>District*</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -260,7 +265,7 @@ const AddressDialog: React.FC<AddressDialogProps> = ({
               <Button
                 type="submit"
                 className="primary-btn"
-                onClick={() => onOpenChange(false)}
+             
               >
                 Save
               </Button>

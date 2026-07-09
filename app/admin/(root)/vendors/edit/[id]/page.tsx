@@ -397,7 +397,11 @@ const EditVendorAdminForm = () => {
                           <FormControl>
                             <RegionDropdown
                               country={country}
+<<<<<<< HEAD
                               value={field.value ?? ""}
+=======
+                               value={field.value ?? ""}
+>>>>>>> 13c8f9d (Some UI changes and added Razorpay and Shiprocket integration)
                               onChange={field.onChange}
                               defaultOptionLabel="Select a state"
                               className="w-full px-4 py-2 rounded-lg border border-gray-200 bg-white"

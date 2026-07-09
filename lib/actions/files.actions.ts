@@ -29,7 +29,11 @@ export async function getFileById(id: string) {
     return {
       buffer,
       _id: file._id,
+<<<<<<< HEAD
      contentType: file.metadata?.contentType || "application/octet-stream",
+=======
+      contentType: file.metadata?.contentType || "application/octet-stream",
+>>>>>>> 13c8f9d (Some UI changes and added Razorpay and Shiprocket integration)
       filename: file.filename,
     };
   } catch (error) {

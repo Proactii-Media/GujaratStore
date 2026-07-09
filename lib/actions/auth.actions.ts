@@ -3,7 +3,7 @@
 import { connectToDB } from "@/lib/mongodb";
 import User from "@/lib/models/user.model";
 import OTP from "@/lib/models/otp.model";
-import { generateOTP, sendEmailOTP } from "@/lib/auth";
+import { generateOTP, sendEmailOTP } from "@/lib/authlast";
 
 type SignUpData = {
   name: string;

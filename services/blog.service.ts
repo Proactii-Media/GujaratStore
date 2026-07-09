@@ -265,7 +265,7 @@ export class BlogService {
   private static transformBlog(blog: IBlog): TransformedBlog {
     return {
       id: blog._id.toString(),
-      vendorId: blog.vendorId,
+      vendorId:blog.vendorId.toString(),
       imageId: blog.imageId,
       user: blog.user,
       date: blog.date,

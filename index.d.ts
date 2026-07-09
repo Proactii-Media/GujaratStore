@@ -16,10 +16,17 @@ declare interface IUser {
   referralUsed?: boolean;
   role: "user";
   isVerified: boolean;
+<<<<<<< HEAD
 
    emailValid?: boolean;
   campaignSentAt?: Date | null;
   
+=======
+  
+  emailValid?: boolean;
+  campaignSentAt?: Date | null;
+
+>>>>>>> 13c8f9d (Some UI changes and added Razorpay and Shiprocket integration)
   verificationToken?: string;
   verificationTokenExpiry?: Date;
   lastLoginAt?: string | Date;
@@ -368,7 +375,7 @@ declare interface IProduct {
   brands: string; // MongoDB ObjectId as string
   productSKU: string;
   productColor?: string;
-  productSize?: IProductSizePrice[];
+  productSize: IProductSizePrice[];
   productDescription: string;
   productImages: (string | File)[];
   productCoverImage: string | File;
@@ -414,7 +421,7 @@ declare interface IAdminProduct {
   brands: string; // MongoDB ObjectId as string
   productSKU: string;
   productColor?: string;
-  productSize?: IProductSizePrice[];
+  productSize: IProductSizePrice[];
   productDescription: string;
   productImages: (string | File)[];
   productCoverImage: string | File;

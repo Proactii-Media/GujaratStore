@@ -270,14 +270,16 @@ const HoverNavigationMenu: React.FC<HoverNavigationMenuProps> = ({
         )}
       >
         <div className="max-w-full mx-auto overflow-visible">
-          <div
-            className={cn(
-              "flex items-center px-2 md:px-4 overflow-hidden",
-              isHomePage
-                ? "justify-start md:justify-center space-x-3 md:space-x-6 lg:space-x-14 h-16 md:h-20"
-                : "justify-center h-14 space-x-6 md:space-x-8 w-full"
-            )}
-          >
+
+            
+<div
+  className={cn(
+    "flex items-center w-full px-2 lg:px-4",
+   isHomePage
+  ? "justify-start md:justify-center gap-3 md:gap-2 min-[1024px]:max-[1279px]:gap-9 xl:gap-14 h-16 md:h-20"
+  : "justify-center h-14 gap-6 md:gap-4 min-[1024px]:max-[1279px]:gap-3 xl:gap-5 w-full"
+  )}
+>
             {isHomePage
               ? // Home page - show icons with parent categories from database
                 parentCategoriesWithIcons.map((parentCategory) => {
@@ -294,7 +296,7 @@ const HoverNavigationMenu: React.FC<HoverNavigationMenuProps> = ({
                       <Link href={`/category/${parentCategory.slug}`}>
                         <div
                           className={cn(
-                            "flex flex-col items-center space-y-1 p-2 md:p-3 rounded-lg transition-all duration-200 min-w-max cursor-pointer",
+                            "flex flex-col items-center space-y-1 p-1 md:p-2 lg:p-3 rounded-lg transition-all duration-200 min-w-0 flex-1 cursor-pointer",
                             "hover:bg-brand hover:text-white",
                             hoveredCategory === parentCategory._id
                               ? "bg-brand text-white"
@@ -304,7 +306,7 @@ const HoverNavigationMenu: React.FC<HoverNavigationMenuProps> = ({
                             "text-xs md:text-sm"
                           )}
                         >
-                          <parentCategory.icon className="h-5 w-5 md:h-8 md:w-8" />
+                          <parentCategory.icon className="h-5 w-5 md:h-6 md:w-6 lg:h-8 lg:w-8" />
                           <span className="text-xs font-medium whitespace-nowrap capitalize">
                             {parentCategory.name}
                           </span>

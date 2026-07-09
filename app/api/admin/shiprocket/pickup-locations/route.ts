@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { VendorService } from "@/services/vendor.service";
 
 const BACKEND_URL =
-  process.env.SHIPROCKET_BACKEND_URL || "http://localhost:8000";
+  process.env.SHIPROCKET_BACKEND_URL || "http://localhost:3000";
 
 export async function GET(request: Request) {
   try {

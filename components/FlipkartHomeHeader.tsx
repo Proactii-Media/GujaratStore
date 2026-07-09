@@ -210,7 +210,7 @@ const FlipkartHomeHeader = () => {
   const renderAuthButtons = () => {
     if (!isAuthenticated) {
       return (
-        <div className="space-x-4">
+        <div className="space-x-4 lg:space-x-4 md:space-x-3 ">
           <Button
             variant="ghost"
             className="border border-white text-white rounded hover:bg-white/20 hover:text-white"
@@ -246,12 +246,16 @@ const FlipkartHomeHeader = () => {
                 height={500}
                 width={500}
                 alt="logo"
-                className="h-12 w-full"
+                className="h-12 md:h-12 lg:h-14 xl:h-14 w-full"
               />
             </Link>
-            <div className="relative" ref={searchRef}>
+          
+          </div>
+          <div className="flex items-center space-x-4">
+              <div className="relative" ref={searchRef}>
               <Input
-                className="w-[400px] bg-white"
+                // className="w-[400px] bg-white"
+                className="w-[300px] md:w-[250px] lg:w-[500px] xl:w-[400px] bg-white"
                 placeholder="Search for products..."
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
@@ -274,9 +278,8 @@ const FlipkartHomeHeader = () => {
                 />
               )}
             </div>
-            {renderAuthButtons()}
-          </div>
-          <div className="flex items-center space-x-4">
+              {renderAuthButtons()}
+
             <Button
               className="bg-transparent hover:bg-white/20 text-white"
               asChild

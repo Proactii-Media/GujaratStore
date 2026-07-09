@@ -166,7 +166,7 @@ const Header = () => {
   const renderAuthButtons = () => {
     if (!isAuthenticated) {
       return (
-        <div className="space-x-4">
+        <div className="space-x-3">
           <Button
             variant="ghost"
             className="border border-white text-white rounded hover:bg-white/20 hover:text-white"
@@ -197,9 +197,9 @@ const Header = () => {
         <div className="h-[72px] w-full max-w-6xl mx-auto hidden md:flex flex-row items-center justify-between px-4">
           <div className="flex flex-row items-center space-x-4">
             <Link prefetch href="/">
-              <Image src="/logo.png" height={56} width={108} alt="logo" />
+              <Image src="/logo.png" height={56} width={108} alt="logo"  className="h-12 md:h-12 lg:h-14 xl:h-14 w-full" />
             </Link>
-            <div className="relative" ref={searchRef}>
+            {/* <div className="relative" ref={searchRef}>
               <Input
                 className="w-[400px] bg-white"
                 placeholder="Search for products..."
@@ -223,10 +223,38 @@ const Header = () => {
                   onClose={handleProductSelect}
                 />
               )}
-            </div>
-            {renderAuthButtons()}
+            </div> */}
+            {/* {renderAuthButtons()} */}
           </div>
           <div className="flex items-center space-x-4">
+                
+  <div className="relative" ref={searchRef}>
+              <Input
+                className="ww-[300px] md:w-[250px] lg:w-[500px] xl:w-[400px] bg-white"
+                placeholder="Search for products..."
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                onFocus={() => {
+                  if (searchQuery.trim().length > 0) {
+                    setShowDropdown(true);
+                  }
+                }}
+              />
+              <Button className="absolute right-0 top-0 h-full bg-transparent hover:bg-transparent">
+                <Search className="h-5 w-5 text-gray-500" />
+              </Button>
+
+              {showDropdown && (
+                <SearchDropdown
+                  results={searchResults}
+                  isLoading={isSearching}
+                  searchQuery={searchQuery}
+                  onClose={handleProductSelect}
+                />
+              )}
+            </div>
+            {renderAuthButtons()}
+            
             <Button
               className="bg-transparent hover:bg-white/20 text-white"
               asChild
@@ -269,7 +297,7 @@ const Header = () => {
                       <DropdownMenuItem
                         key={link.route}
                         onClick={() => router.push(link.route)}
-                        className="cursor-pointer flex items-center space-x-2"
+                        className=" cursor-pointer flex items-center space-x-2"
                       >
                         <link.icon className="h-4 w-4" />
                         <span>{link.label}</span>

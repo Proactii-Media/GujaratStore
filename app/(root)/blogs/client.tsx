@@ -79,7 +79,6 @@ const ClientBlogs = ({ initialBlog }: any) => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       {/* Breadcrumb Hero */}
       <BreadcrumbHeader subtitle="Blogs" title="Home" titleHref="/" />
-
       {/* Search Bar */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}

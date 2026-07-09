@@ -11,6 +11,9 @@ import {
   ShoppingCart,
   ClipboardList,
   Users,
+  Quote,
+  
+  Sliders,
   Percent,
   Star,
   LayoutPanelLeft,
@@ -180,21 +183,26 @@ export const homeImageCircles = [
     src: "/c1.jpg",
     alt: "Clothes",
     label: "CLOTHING",
+    url: "/category/fashion",
+  
   },
   {
     src: "/c2.png",
     alt: "Artisans",
     label: "ARTISAN",
+     url: "/category/handicrafts",
   },
   {
     src: "/c3.png",
     alt: "Organic",
     label: "ORGANIC",
+     url: "/category/organic",
   },
   {
     src: "/c4.png",
     alt: "Foods",
     label: "FOOD's",
+     url: "/category/food-and-beverages",
   },
 ];
 
@@ -635,6 +643,21 @@ export const vendorSidebarLinks = [
     route: "/vendor/dashboard",
     icon: ChartPie,
   },
+
+  {
+    label: "Hero Slider",
+    route: "/vendor/heroslider",
+    icon: Sliders,
+  },
+
+
+
+    {
+    label: "Testimonials",
+    route: "/vendor/testimonials",
+    icon: Quote,
+  },
+
   {
     label: "Attribute",
     route: "/vendor/attribute",
@@ -706,6 +729,23 @@ export const adminSidebarLinks = [
     route: "/admin/dashboard",
     icon: ChartPie,
   },
+
+  {
+    label: "Testimonials",
+    route: "/admin/testimonials",
+    icon: Quote,
+  },
+
+
+    {
+    label: "Hero Slider",
+    route: "/admin/heroslider",
+    icon: Sliders,
+  },
+
+
+
+  
   {
     label: "Attribute",
     route: "/admin/attribute",
@@ -776,4 +816,4 @@ export const adminSidebarLinks = [
   },
 ];
 
-export const CACHE_TTL = 300; // 5 minutes in seconds
+export const CACHE_TTL = 300; 

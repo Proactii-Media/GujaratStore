@@ -129,6 +129,7 @@ const ProductsPage = () => {
 
   // Handle delete
   const handleDelete = async (id: string) => {
+     console.log("Deleting product with ID:", id);
     try {
       const response = await fetch(`/api/admin/products?id=${id}`, {
         method: "DELETE",

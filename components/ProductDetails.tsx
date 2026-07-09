@@ -14,6 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Truck, List } from "lucide-react";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useEffect, useState, useCallback, useMemo } from "react";
@@ -320,6 +321,8 @@ const ProductsDetailPage = () => {
     );
   }
 
+const description = product.productDescription.replace(/&nbsp;/g, " ");
+
   return (
     <div className="min-h-screen ">
       {/* Hero Section */}
@@ -362,9 +365,8 @@ const ProductsDetailPage = () => {
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbLink
-                    href={`/category/${
-                      product.parentCategory.slug || product.parentCategory.slug
-                    }`}
+                    href={`/category/${product.parentCategory.slug || product.parentCategory.slug
+                      }`}
                   >
                     {product.parentCategory.name}
                   </BreadcrumbLink>
@@ -372,10 +374,9 @@ const ProductsDetailPage = () => {
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbLink
-                    href={`/product-category/${
-                      product.primaryCategory.slug ||
+                    href={`/product-category/${product.primaryCategory.slug ||
                       product.primaryCategory.slug
-                    }`}
+                      }`}
                   >
                     {product.primaryCategory.name}
                   </BreadcrumbLink>
@@ -410,40 +411,50 @@ const ProductsDetailPage = () => {
 
           {/* Product Info */}
           <div className="flex flex-col">
-            <h1 className="text-3xl font-bold mb-0">{product.productName}</h1>
+            <h1 className="text-3xl font-bold mb-0  text-brand">{product.productName}</h1>
             <Link href={`/brand/${product.brands._id}`}>
               <p className="text-gray-500 hover:text-brand transition-colors cursor-pointer hover:underline duration-200">
                 By - {product.brands.name}
               </p>
             </Link>
-            <h2 className="text-lg text-gray-500">
+            <h2 className="text-lg text-black mt-2 mb-2">
               {product.parentCategory.name}, {product.primaryCategory.name},{" "}
               {product.secondaryCategory.name}
             </h2>
-            <div className="flex items-center gap-2 mt-2 mb-3">
-              <span className="bg-green-600 text-white px-2 py-0.5 rounded font-medium">
+            <div className="flex items-center gap-2 mt-2 mb-2">
+              <span className="bg-brand text-white px-2 py-0.5 rounded font-medium">
                 {(
                   reviewStats.averageRating ||
                   product.productRating ||
                   0
                 ).toFixed(1)}
-                ★
+                <span className="pl-1">
+                  ★
+                </span>
+
               </span>
+
+              <span>
+                |
+              </span>
+
               <span className="text-gray-700">
                 {reviewStats.totalReviews.toLocaleString()} Ratings & Reviews
               </span>
+
+
             </div>
-            <div className="mb-4 flex items-center gap-4">
+            <div className="mb-4 flex items-center gap-4 mt-1">
               {selectedSizeData ? (
                 // Show selected size pricing
                 <>
                   <span className="text-xl font-bold text-gray-900">
                     ₹
                     {selectedSizeData.netPrice &&
-                    !isNaN(selectedSizeData.netPrice)
+                      !isNaN(selectedSizeData.netPrice)
                       ? Math.floor(selectedSizeData.netPrice).toLocaleString(
-                          "en-IN"
-                        )
+                        "en-IN"
+                      )
                       : "0"}
                   </span>
                   {selectedSizeData.mrp &&
@@ -548,8 +559,8 @@ const ProductsDetailPage = () => {
                 )}
 
               {/* Quantity Selector */}
-              <div className="flex items-center gap-2">
-                <h1 className="font-semibold text-base md:text-lg">
+              <div className="flex items-center gap-2 ">
+                <h1 className="font-semibold text-base md:text-lg  ">
                   Quantity:
                 </h1>
                 <QuantitySelector
@@ -559,10 +570,10 @@ const ProductsDetailPage = () => {
                 />
               </div>
             </div>
-            <div className="flex gap-4 mb-4">
+            <div className="flex gap-4 mb-4  ">
               <Button
                 variant="secondary"
-                className="shadow-md flex items-center gap-2 flex-1"
+                className="shadow-md font-bold   flex h-12 md:h-11 lg:h-12 sm:h-9 items-center gap-2 flex-1 bg-gray-100 text-brand hover:bg-red-200 text-red-600 hover:text-red-800 border border-red-200"
                 onClick={handleToggleCart}
                 disabled={
                   product.productSize &&
@@ -575,7 +586,7 @@ const ProductsDetailPage = () => {
               >
                 <div
                   className={cn(
-                    "p-2 rounded -ml-3 transition-all duration-300"
+                    "p-2 rounded-l-md transition-all duration-300"
                   )}
                 >
                   {product?.inCart ? (
@@ -588,7 +599,7 @@ const ProductsDetailPage = () => {
               </Button>
 
               <Button
-                className="primary-btn flex-1"
+                className="primary-btn flex-1 h-12 md:h-11 lg:h-12 sm:h-9 font-bold"
                 onClick={handleBuyNow}
                 disabled={
                   product.productSize &&
@@ -604,7 +615,7 @@ const ProductsDetailPage = () => {
 
               <Button
                 variant="secondary"
-                className="aspect-square p-2 shadow-sm hover:shadow-md"
+                className="aspect-square p-2 shadow-sm hover:shadow-md rounded-md flex items-center justify-center  border border-red-200 hover:bg-red-200 hover:text-red-800  transition-all duration-300"
                 onClick={handleToggleWishlist}
               >
                 <Heart
@@ -615,26 +626,31 @@ const ProductsDetailPage = () => {
                 />
               </Button>
             </div>
-            <p className="text-gray-600 text-sm mb-4">
-              Expected Delivery By: {formattedDeliveryDate}
+            <p className="flex items-center gap-2 text-sm mb-4 bg-red-50 border border-red-200 text-brand p-1 rounded-lg">
+              <Truck className="w-5 h-5 text-brand" />
+              <span >
+                Expected Delivery By: <strong>{formattedDeliveryDate}</strong>
+              </span>
             </p>
             <div>
-              <h1 className="text-xl sm:text-3xl font-bold mb-4">
+              <h1 className="text-xl sm:text-3xl font-bold mb-4 mt-2">
                 Product Details
               </h1>
 
               <div className="border-b">
                 <Accordion type="single" collapsible>
                   <AccordionItem value="productDescription">
-                    <AccordionTrigger>
-                      <h1 className="text-base sm:text-xl font-bold ">
+                    <AccordionTrigger >
+                      
+                      
+                      <h1 className="text-base sm:text-xl font-bold  ">
                         Attributes
                       </h1>
                     </AccordionTrigger>
                     <AccordionContent>
                       {product.attributes.map((attr) => (
-                        <p key={attr._id} className="mb-2">
-                          <span className="font-semibold">
+                        <p key={attr._id} className="mb-2 ">
+                          <span className="font-semibold text-brand  ">
                             {attr.attributeId?.name}:{" "}
                           </span>
                           {attr.value}
@@ -653,12 +669,18 @@ const ProductsDetailPage = () => {
                       </h1>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <div
+                      {/* <div 
                         dangerouslySetInnerHTML={{
                           __html: product.productDescription,
                         }}
-                      />
-                    </AccordionContent>
+                      /> */}
+
+<div
+  className="leading-7 text-left md:text-justify"
+  dangerouslySetInnerHTML={{
+    __html: description,
+  }}
+/>             </AccordionContent>
                   </AccordionItem>
                 </Accordion>
                 <Accordion type="single" collapsible>

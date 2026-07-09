@@ -8,8 +8,11 @@ const ClientHomePage = () => {
   return (
     <div className="min-h-screen parallax-element">
       <Hero />
+
+ <OrganicAndFlavours />
+
       <NewCollection />
-      <OrganicAndFlavours />
+     
       <Testimonials />
     </div>
   );
