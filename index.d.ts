@@ -3,6 +3,42 @@ declare interface RouteParams {
   searchParams: Promise<Record<string, string>>;
 }
 
+// declare interface IUser {
+//   _id: Types.ObjectId | string;
+//   name: string;
+//   email: string;
+//   phone: string;
+//   password: string;
+//   googleId?: string;
+//   addresses: IAddress[];
+//   referral?: string;
+//   rewardPoints?: number;
+//   referralUsed?: boolean;
+//   role: "user";
+//   isVerified: boolean;
+// <<<<<<< HEAD
+
+//    emailValid?: boolean;
+//   campaignSentAt?: Date | null;
+  
+// =======
+  
+//   emailValid?: boolean;
+//   campaignSentAt?: Date | null;
+
+// >>>>>>> 13c8f9d (Some UI changes and added Razorpay and Shiprocket integration)
+//   verificationToken?: string;
+//   verificationTokenExpiry?: Date;
+//   lastLoginAt?: string | Date;
+//   wishlist?: (Types.ObjectId | string)[];
+//   cart?: (Types.ObjectId | string)[];
+//   order?: (Types.ObjectId | string)[];
+//   __v: number;
+//   createdAt?: string | Date;
+//   updatedAt?: string | Date;
+// }
+
+
 declare interface IUser {
   _id: Types.ObjectId | string;
   name: string;
@@ -16,17 +52,10 @@ declare interface IUser {
   referralUsed?: boolean;
   role: "user";
   isVerified: boolean;
-<<<<<<< HEAD
 
-   emailValid?: boolean;
-  campaignSentAt?: Date | null;
-  
-=======
-  
   emailValid?: boolean;
   campaignSentAt?: Date | null;
 
->>>>>>> 13c8f9d (Some UI changes and added Razorpay and Shiprocket integration)
   verificationToken?: string;
   verificationTokenExpiry?: Date;
   lastLoginAt?: string | Date;
@@ -37,7 +66,6 @@ declare interface IUser {
   createdAt?: string | Date;
   updatedAt?: string | Date;
 }
-
 declare interface ProfileProps {
   initialData: UserResponse;
   onProfileUpdate: (updatedUser: UserResponse) => void;

@@ -66,16 +66,8 @@ const userSchema = new mongoose.Schema<IUser>({
   },
   isVerified: { type: Boolean, default: false },
 
-<<<<<<< HEAD
-emailValid: {
-  type: Boolean,
-  default: true
-},
-
-=======
 emailValid: {type: Boolean},
     
->>>>>>> 13c8f9d (Some UI changes and added Razorpay and Shiprocket integration)
 campaignSentAt: {
   type: Date,
   default: null,

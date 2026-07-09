@@ -3,11 +3,7 @@ import { Document, Schema, Types } from "mongoose";
 import { Control } from "react-hook-form";
 import { z } from "zod";
 
-<<<<<<< HEAD
 export interface IBlog {
-=======
-export interface IBlog  {
->>>>>>> 13c8f9d (Some UI changes and added Razorpay and Shiprocket integration)
   _id: String;
   vendorId: string;
   imageId: string;
