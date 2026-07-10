@@ -33,37 +33,38 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { GiRobotGolem } from "react-icons/gi";
 export const NavLinks = [
   {
-    route: "/clothing",
-    label: "Clothing",
+    route: "/category/accessories",
+    label: "Accessories",
   },
   {
-    route: "/artisans",
-    label: "Artisans",
+    route: "/category/fashion",
+    label: "Fashion",
   },
   {
-    route: "/furnishings",
-    label: "Furnishings",
+    route: "/category/food-and-beverages",
+    label: "Food & Beverages",
   },
   {
-    route: "/home-decor",
+    route: "/category/handicrafts",
+    label: "Handicrafts",
+  },
+  {
+    route: "/category/home-decor",
     label: "Home Decor",
   },
   {
-    route: "/food",
-    label: "Food & Bevrages",
-  },
-  {
-    route: "/farsan",
-    label: "Farsan & Mukhvas",
-  },
-  {
-    route: "/organic",
+    route: "/category/organic",
     label: "Organic",
   },
   {
-    route: "/nuts-and-dry-fruit",
-    label: "Dry Fruit and Nuts",
+    route: "/category/toys-and-games",
+    label: "Toys & Games",
   },
+   {
+    route: "/category/creative-corner",
+    label: "Creative Corner",
+  }
+
 ];
 
 // New parent categories for the Flipkart-style home navbar

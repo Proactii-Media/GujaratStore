@@ -127,7 +127,7 @@ console.log(organicProducts.length);
             variants={containerVariants}
             initial="hidden"
             animate={organicInView ? "visible" : "hidden"}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-16"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pt-16"
           >
             {loading ? (
               <div className="col-span-full flex justify-center items-center py-16">

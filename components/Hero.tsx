@@ -188,10 +188,11 @@ const Hero = () => {
               <div className="absolute inset-0 bg-black/20 h-[450px] w-full" />
 
               {/* Content */}
-              <div className="relative text-white z-10 flex flex-col items-center justify-center sm:items-start sm:justify-start h-full p-4 sm:p-6 md:p-16 text-center sm:text-left mt-14">
+              <div 
+              className="relative text-white z-10 flex flex-col items-center justify-center sm:items-start sm:justify-start h-full p-4 sm:p-6 md:p-16 text-center sm:text-left sm:mt-0 md:mt-10 lg:mt-0">
                 <motion.p
                   variants={itemVariants}
-                  className="text-5xl sm:text-base md:text-5xl font-extralight sm:mt-0 mt-16"
+                  className="text-5xl sm:text-base md:text-5xl font-extralight sm:mt-0 md:mt-16 lg:mt-16"
                 >
                   {currentSlide.title}{" "}
                   <motion.strong
@@ -205,7 +206,8 @@ const Hero = () => {
                 </motion.p>
                 <motion.h2
                   variants={itemVariants}
-                  className="mt-5 text-[75px] font-semibold"
+                className="mt-5 text-[44px] sm:text-[75px] font-semibold"
+                  
                 >
                   {currentSlide.gujratititle}
                 </motion.h2>

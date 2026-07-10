@@ -351,7 +351,7 @@ const CategoryClient = ({
                         alt={product.productName}
                         width={250}
                         height={250}
-                        className="h-full w-full object-cover object-top transition-transform duration-300 hover:scale-105"
+                        className="h-full w-full object-contain object-top transition-transform duration-300 hover:scale-105"
                       />
                     </Link>
                   </div>

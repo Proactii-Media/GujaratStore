@@ -22,7 +22,7 @@ const AboutUs = () => {
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-900 font-playfair mb-6">
                     Why Gujarat Store?
                   </h2>
-                  <p className="text-gray-700 leading-relaxed text-lg">
+                  <p className="text-gray-700 leading-relaxed text-lg text-justify">
                     The Gujarat Store is committed to providing a unique
                     e-commerce platform where Gujaratis from India can proudly
                     list their products, while Gujaratis from anywhere in the
@@ -74,7 +74,7 @@ const AboutUs = () => {
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-900 font-playfair mb-6">
                     What is Gujarat Store?
                   </h2>
-                  <p className="text-gray-700 leading-relaxed text-lg">
+                  <p className="text-gray-700 leading-relaxed text-lg text-justify">
                     The Gujarat Store is committed to listing only self-checked,
                     curated, and authentic products to ensure the highest
                     quality for its customers. Every product available on the
@@ -108,7 +108,7 @@ const AboutUs = () => {
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">
                     🌟 Empowering Global Gujarati Connection
                   </h3>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="text-gray-700 leading-relaxed text-justify">
                     The Gujarat Store is committed to providing a unique
                     e-commerce platform where Gujaratis from India can proudly
                     list their products, while Gujaratis from anywhere in the
@@ -126,7 +126,7 @@ const AboutUs = () => {
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">
                     ✅ Authentic & Quality Assurance
                   </h3>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="text-gray-700 leading-relaxed text-justify">
                     The Gujarat Store is committed to listing only self-checked,
                     curated, and authentic products to ensure the highest
                     quality for its customers. Every product available on the
@@ -148,7 +148,7 @@ const AboutUs = () => {
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">
                     🏛️ Celebrating Every District of Gujarat
                   </h3>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="text-gray-700 leading-relaxed text-justify">
                     The Gujarat Store is dedicated to bringing traditional
                     products from every district of Gujarat, showcasing the rich
                     and diverse heritage of the region. From the intricate
@@ -174,7 +174,7 @@ const AboutUs = () => {
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">
                     🤝 Customer-Centric Excellence
                   </h3>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="text-gray-700 leading-relaxed text-justify">
                     At THE GUJARAT STORE, our commitment to customers is
                     centered on delivering an exceptional shopping experience
                     marked by trust, transparency, and reliability. We promise
