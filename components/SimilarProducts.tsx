@@ -270,7 +270,7 @@ const SimilarProducts = () => {
                     <div className="flex w-full items-center justify-between gap-2 ">
                       <Button
                        variant="secondary"
-                        className="shadow-md flex items-center gap-2 bg-white border border-red-200 "
+                        className="shadow-md flex items-center gap-2 bg-white border border-red-100 "
                         onClick={(e) => handleToggleCart(e, product)}
                       >
                         <div
@@ -290,7 +290,7 @@ const SimilarProducts = () => {
                       <Button
                         variant="secondary"
                         size="sm"
-                        className="aspect-square p-1 shadow-sm bg-white border border-red-200 "
+                        className="aspect-square p-1 shadow-sm bg-white border border-red-100 "
                         onClick={(e) => handleToggleWishlist(e, product)}
                       >
                         <Heart
