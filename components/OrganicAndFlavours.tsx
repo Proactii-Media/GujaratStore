@@ -151,7 +151,7 @@ console.log(organicProducts.length);
                   key={product._id}
                   variants={itemVariants}
                   whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                  className="flex flex-col items-center justify-between min-h-[400px] pt-[25px] pb-[25px]  border border-red-200 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+                  className="flex flex-col items-center justify-between min-h-[400px] pt-[25px] pb-[25px]  border border-red-100 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
                 >
 
                   {/* {`/${product.parentCategory.name.toLowerCase()}/${
