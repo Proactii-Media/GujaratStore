@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="w-full bg-black text-white mt-auto py-8">
       <div className="dynamic-container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-start">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-0 md:gap-[29px] lg:gap-0">
           {/* Left Side with Logo and Address */}
           <div className="mb-6 md:mb-0">
             <Image

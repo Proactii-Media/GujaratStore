@@ -77,12 +77,12 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="w-full max-w-full mx-auto pt-12 md:pt-10 lg:pt-14 lg:px-2">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 lg:gap-48 items-center">
+    <div className="w-full max-w-full mx-auto pt-[4rem]  md:pt-10 lg:pt-14  lg:px-2 bg-gray-50">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 lg:gap-48 items-center ">
         {/* Left Section - Form */}
-        <div className="p-4 sm:p-8 lg:p-20 space-y-6 md:space-y-8">
-          <div className="space-y-1">
-            <p className="text-xl text-center sm:text-start sm:text-xl font-normal font-playfair">
+        <div className="p-4 sm:p-8 lg:p-20 space-y-6 md:space-y-8 ">
+          <div className="space-y-1 ">
+            <p className="text-xl text-center sm:text-start sm:text-xl font-normal font-playfair ">
               Let&apos;s
             </p>
             <h1 className="text-3xl sm:text-4xl text-center sm:text-start font-bold font-playfair">

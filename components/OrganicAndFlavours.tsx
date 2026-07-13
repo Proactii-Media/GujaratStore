@@ -127,7 +127,7 @@ console.log(organicProducts.length);
             variants={containerVariants}
             initial="hidden"
             animate={organicInView ? "visible" : "hidden"}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pt-16"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  pt-16 gap-8 sm:gap-8 md:gap-8 lg:gap-4 xl:gap-8"
           >
             {loading ? (
               <div className="col-span-full flex justify-center items-center py-16">
@@ -151,7 +151,7 @@ console.log(organicProducts.length);
                   key={product._id}
                   variants={itemVariants}
                   whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                  className="flex flex-col items-center justify-between min-h-[420px]"
+                  className="flex flex-col items-center justify-between min-h-[400px] pt-[25px] pb-[25px]  border border-red-200 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
                 >
 
                   {/* {`/${product.parentCategory.name.toLowerCase()}/${
@@ -162,8 +162,22 @@ console.log(organicProducts.length);
                     href= {`/product/${product.slug}`}
                     className="flex flex-col items-center w-full flex-1"
                   >                    
-                    <motion.div
+                    {/* <motion.div
                       className="mb-4 rounded-full overflow-hidden w-[250px] h-[250px]"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.3 }}
+                    > */}
+
+                       <motion.div
+                      className="mb-4 rounded-full overflow-hidden
+                      w-[250px] h-[250px]
+    sm:w-[250px] sm:h-[250px]
+    md:w-[270px] md:h-[270px]
+    lg:w-[215px] lg:h-[215px]
+    xl:w-[245px] xl:h-[245px] 
+                      
+                      
+                      "
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -194,7 +208,7 @@ console.log(organicProducts.length);
                     </div>
                   </Link>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3">
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}

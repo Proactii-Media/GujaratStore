@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
@@ -20,7 +18,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { UserNavLinks } from "@/constants";
+import { NavLinks, UserNavLinks } from "@/constants";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { signOut as nextAuthSignOut, useSession } from "next-auth/react";
@@ -30,13 +28,6 @@ import SearchDropdown from "./SearchDropdown";
 import { useCart } from "@/context/CartContext";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import HoverNavigationMenu from "./HoverNavigationMenu";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { ParentCategories } from "@/constants";
 
 // Define the search result type
 type SearchResult = {
@@ -48,7 +39,7 @@ type SearchResult = {
   };
 };
 
-const FlipkartHomeHeader = () => {
+const Header = () => {
   const [isOpen, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -67,42 +58,6 @@ const FlipkartHomeHeader = () => {
 
   const cartItemsCount = cartCount || 0;
   const isAuthenticated = status === "authenticated";
-
-  // Navigation data for mobile waterfall menu
-  interface NavigationCategory {
-    _id: string;
-    name: string;
-    primaryCategories: { _id: string; name: string }[];
-  }
-  const [navigationData, setNavigationData] = useState<NavigationCategory[]>(
-    []
-  );
-
-  useEffect(() => {
-    const fetchNav = async () => {
-      try {
-        const response = await fetch("/api/navigation/parent-categories");
-        const data = await response.json();
-        if (data.success) {
-          // Enforce ParentCategories order
-          const normalize = (s: string) =>
-            s.toLowerCase().replace(/[^a-z0-9]/g, "");
-          const order = ParentCategories.map((c) => normalize(c.label));
-          const sorted = [...data.data].sort((a: any, b: any) => {
-            const ai = order.indexOf(normalize(a.name));
-            const bi = order.indexOf(normalize(b.name));
-            const aval = ai === -1 ? Number.MAX_SAFE_INTEGER : ai;
-            const bval = bi === -1 ? Number.MAX_SAFE_INTEGER : bi;
-            return aval - bval;
-          });
-          setNavigationData(sorted);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchNav();
-  }, []);
 
   // * Search function with debouncing
   const handleSearch = (query: string) => {
@@ -144,6 +99,7 @@ const FlipkartHomeHeader = () => {
   };
 
   // Add cleanup effect for search timeout
+  // Remove the cart change event listener since we now use centralized context
   useEffect(() => {
     return () => {
       if (searchTimeoutRef.current) {
@@ -187,8 +143,8 @@ const FlipkartHomeHeader = () => {
   // * signOut function
   const handleSignOut = async () => {
     try {
-      await nextAuthSignOut({ redirect: false });
-      const response = await serverSignOut();
+      await nextAuthSignOut({ redirect: false }); // * First, call the client-side NextAuth signOut
+      const response = await serverSignOut(); // * Then call your server action
       if (response.success) {
         toast({ title: "Success", description: "Signed out successfully" });
         router.push("/sign-in");
@@ -210,7 +166,7 @@ const FlipkartHomeHeader = () => {
   const renderAuthButtons = () => {
     if (!isAuthenticated) {
       return (
-        <div className="space-x-4 lg:space-x-4 md:space-x-3 ">
+        <div className="space-x-3">
           <Button
             variant="ghost"
             className="border border-white text-white rounded hover:bg-white/20 hover:text-white"
@@ -235,27 +191,46 @@ const FlipkartHomeHeader = () => {
   };
 
   return (
-    <nav className="w-full z-50">
+    <nav className="sticky top-0 w-full z-50">
       <div className="bg-brand">
         {/* Desktop Header */}
-        <div className="h-20 w-full max-w-6xl mx-auto hidden md:flex flex-row items-center justify-between px-4">
+        <div className="h-[72px] w-full max-w-6xl mx-auto hidden md:flex flex-row items-center justify-between px-4">
           <div className="flex flex-row items-center space-x-4">
             <Link prefetch href="/">
-              <Image
-                src="/logo.png"
-                height={500}
-                width={500}
-                alt="logo"
-                className="h-12 md:h-12 lg:h-14 xl:h-14 w-full"
-              />
+              <Image src="/logo.png" height={56} width={108} alt="logo"  className="h-12 md:h-12 lg:h-14 xl:h-14 w-full" />
             </Link>
-          
+            {/* <div className="relative" ref={searchRef}>
+              <Input
+                className="w-[400px] bg-white"
+                placeholder="Search for products..."
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                onFocus={() => {
+                  if (searchQuery.trim().length > 0) {
+                    setShowDropdown(true);
+                  }
+                }}
+              />
+              <Button className="absolute right-0 top-0 h-full bg-transparent hover:bg-transparent">
+                <Search className="h-5 w-5 text-gray-500" />
+              </Button>
+
+              {showDropdown && (
+                <SearchDropdown
+                  results={searchResults}
+                  isLoading={isSearching}
+                  searchQuery={searchQuery}
+                  onClose={handleProductSelect}
+                />
+              )}
+            </div> */}
+            {/* {renderAuthButtons()} */}
           </div>
           <div className="flex items-center space-x-4">
-              <div className="relative" ref={searchRef}>
+                
+  <div className="relative" ref={searchRef}>
               <Input
-                // className="w-[400px] bg-white"
-                className="w-[300px] md:w-[250px] lg:w-[500px] xl:w-[400px] bg-white"
+                className="ww-[300px] md:w-[250px] lg:w-[500px] xl:w-[400px] bg-white"
                 placeholder="Search for products..."
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
@@ -278,8 +253,8 @@ const FlipkartHomeHeader = () => {
                 />
               )}
             </div>
-              {renderAuthButtons()}
-
+            {renderAuthButtons()}
+            
             <Button
               className="bg-transparent hover:bg-white/20 text-white"
               asChild
@@ -322,7 +297,7 @@ const FlipkartHomeHeader = () => {
                       <DropdownMenuItem
                         key={link.route}
                         onClick={() => router.push(link.route)}
-                        className="cursor-pointer flex items-center space-x-2"
+                        className=" cursor-pointer flex items-center space-x-2"
                       >
                         <link.icon className="h-4 w-4" />
                         <span>{link.label}</span>
@@ -350,6 +325,7 @@ const FlipkartHomeHeader = () => {
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
+            {/* Mobile Header - Sheet Content */}
             <SheetContent
               ref={sheetContentRef}
               side="left"
@@ -395,49 +371,26 @@ const FlipkartHomeHeader = () => {
                 </div>
               </div>
 
-              {/* Waterfall mobile nav inside sheet */}
-              <div className="border-t px-4 py-3">
-                <p className="text-sm text-gray-500 mb-3">Browse Categories</p>
-                <Accordion type="single" collapsible className="w-full">
-                  {navigationData.map((parent) => (
-                    <AccordionItem key={parent._id} value={parent._id}>
-                      <AccordionTrigger className="text-left capitalize">
-                        {parent.name}
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        <div className="flex flex-col space-y-2">
-                          {parent.primaryCategories?.map((pc) => (
-                            <Link
-                              prefetch
-                              key={pc._id}
-                              // href={`/product-category/${pc.name.toLowerCase()}`}
-                        href={`/product-category/${pc.name
-  .toLowerCase()
-  .trim()
-  .replace(/\//g, "")
-  .replace(/\s+/g, "-")
-  .replace(/-+/g, "-")}`}
-                              className="text-sm text-gray-700 hover:text-brand"
-                              onClick={() => setOpen(false)}
-                            >
-                              {pc.name}
-                            </Link>
-                          ))}
-                          <Link
-                            prefetch
-                            href={`/category/${parent.name.toLowerCase()}`}
-                            className="text-sm text-brand hover:underline"
-                            onClick={() => setOpen(false)}
-                          >
-                            View all {parent.name.toLowerCase()} →
-                          </Link>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
+              {/* Mobile navigation will be handled by mobile-responsive navigation menu */}
+              <div>
+                <div className="border-t px-4 py-3">
+                  <p className="text-sm text-gray-500 mb-4">
+                    Browse Categories
+                  </p>
+                  {/* Basic fallback links for mobile */}
+                  {NavLinks.map((link) => (
+                    <Link
+                      prefetch
+                      key={link.route}
+                      href={link.route}
+                      className="block py-2 text-gray-600 hover:text-brand transition-colors"
+                      onClick={() => setOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
                   ))}
-                </Accordion>
+                </div>
               </div>
-
               <div className="px-4 py-3">{renderAuthButtons()}</div>
             </SheetContent>
           </Sheet>
@@ -503,12 +456,12 @@ const FlipkartHomeHeader = () => {
         </div>
       </div>
 
-      {/* Navigation Menu - Home Page Style with Icons (desktop only) */}
+      {/* Navigation Links - Desktop and Mobile */}
       <div className="hidden md:block">
-        <HoverNavigationMenu isHomePage={true} />
+        <HoverNavigationMenu isHomePage={false} />
       </div>
     </nav>
   );
 };
 
-export default FlipkartHomeHeader;
+export default Header;
