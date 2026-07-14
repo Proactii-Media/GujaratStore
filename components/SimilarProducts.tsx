@@ -212,7 +212,7 @@ const SimilarProducts = () => {
                   key={product._id}
                   className="pl-2 md:pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
                 >
-                  <div className="flex flex-col items-center justify-between rounded-lg  p-4 shadow-sm transition-shadow hover:shadow-md h-full bg-red-50 border border-red-200">
+                  <div className="flex flex-col items-center justify-between rounded-lg  p-4 shadow-sm transition-shadow hover:shadow-md h-full bg-red-50 border border-red-100">
                     {/* Image Container */}
                     <div className="mb-4 h-40 w-full overflow-hidden rounded-lg">
                       <Link

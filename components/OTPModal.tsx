@@ -19,24 +19,24 @@ interface OtpModalProps {
   email: string;
   type?: "verification" | "password-reset";
   role: "user" | "vendor";
-  referralCode?: string; // Add referral code prop
-  onVerified: (
-    email: string,
-    otp: string
-  ) => Promise<{ success: boolean; message: string }>;
-  onResendOTP: (
-    email: string
-  ) => Promise<{ success: boolean; message: string }>;
+  referralCode?: string;
+  onVerified: (email: string, otp: string) => Promise<{ success: boolean; message: string }>;
+  onResendOTP: (email: string) => Promise<{ success: boolean; message: string }>;
+  onSuccess?: () => void;   // ✅ add this optional prop
 }
 
 const OtpModal = ({
   email,
   type = "verification",
   role = "user",
-  referralCode, // Accept the referral code
+  referralCode,
   onVerified,
   onResendOTP,
+  onSuccess,                // ✅ destructure it (without default value)
 }: OtpModalProps) => {
+
+  // console.log("OtpModal Rendered");
+
   const [isOpen, setIsOpen] = useState(true);
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -73,12 +73,19 @@ const OtpModal = ({
       const result = await onVerified(email, otp);
 
       if (result.success) {
+        // ✅ If parent provided onSuccess, call it (for sign‑up flow)
+        if (onSuccess) {
+          onSuccess();          // parent shows success toast & navigates
+          setIsOpen(false);     // close modal
+          return;
+        }
+
+        // 🟡 Fallback: existing navigation logic (password-reset, vendor, etc.)
         if (type === "password-reset" && role === "vendor") {
           router.push(`/vendor/reset-password?email=${email}&token=${otp}`);
         } else if (type === "password-reset" && role === "user") {
           router.push(`/reset-password?email=${email}&token=${otp}`);
         } else {
-          // Handle redirect based on referral code
           if (role === "user") {
             if (referralCode) {
               router.push(`/${referralCode}/sign-in`);
@@ -105,7 +112,7 @@ const OtpModal = ({
       setResendDisabled(true);
       setCountdown(30);
 
-      const result = await onResendOTP(email); // Pass email parameter
+      const result = await onResendOTP(email);
       if (!result.success) {
         setErrorMessage("Failed to resend OTP. Please try again later.");
       }
@@ -116,7 +123,7 @@ const OtpModal = ({
   };
 
   const handleOtpChange = (newValue: string) => {
-    const value = newValue.replace(/[^0-9]/g, ""); // Ensure only numeric values
+    const value = newValue.replace(/[^0-9]/g, "");
     setOtp(value);
     setErrorMessage("");
   };

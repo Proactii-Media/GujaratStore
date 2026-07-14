@@ -89,15 +89,34 @@
     </html>
   `;
 
-      await transporter.sendMail({
-        from: process.env.SMTP_FROM,
-        to: email,
-        subject: "Verify your email - The Gujarat Store",
-        html: emailTemplate,
-      });
+      // await transporter.sendMail({
+      //   from: process.env.SMTP_FROM,
+      //   to: email,
+      //   subject: "Verify your email - The Gujarat Store",
+      //   html: emailTemplate,
+      // });
 
-      return { success: true, message: "OTP sent successfully" };
-    } catch (error) {
-      return { success: false, message: "Failed to send email" };
-    }
+      // return { success: true, message: "OTP sent successfully" };
+
+      // Verify SMTP connection
+ await transporter.verify();
+    console.log("✅ SMTP Connected");
+
+    console.log("📧 Sending OTP to:", email);
+
+    const info = await transporter.sendMail({
+      from: process.env.SMTP_FROM,   // ⚠️ change to process.env.SMTP_USER for better deliverability
+      to: email,
+      subject: "Verify your email - The Gujarat Store",
+      html: emailTemplate,
+    });
+
+    console.log("✅ Email Info:", info);
+
+    // 🔥 ADD THIS RETURN – this is what you're missing
+    return { success: true, message: "OTP sent successfully" };
+  } catch (error) {
+    console.error("EMAIL ERROR:", error);
+    return { success: false, message: "Failed to send email" };
+  }
   };

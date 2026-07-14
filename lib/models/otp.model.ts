@@ -1,3 +1,4 @@
+
 import mongoose from "mongoose";
 
 const otpSchema = new mongoose.Schema({
@@ -8,7 +9,8 @@ const otpSchema = new mongoose.Schema({
     enum: ["verification", "password-reset"],
     default: "verification",
   },
-  createdAt: { type: Date, default: Date.now, expires: 300 },
+  userData: { type: mongoose.Schema.Types.Mixed }, 
+  createdAt: { type: Date, default: Date.now, expires: 300 }, 
 });
 
 const OTP = mongoose.models.OTP || mongoose.model("OTP", otpSchema);

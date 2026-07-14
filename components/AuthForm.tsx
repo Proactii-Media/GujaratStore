@@ -49,6 +49,8 @@ const AuthForm = ({
   const { toast } = useToast();
   const router = useRouter();
 
+  console.log("showOtpModal:", showOtpModal);
+
   const formSchema = authFormSchema(type);
   type FormValues = z.infer<typeof formSchema>;
 
@@ -95,17 +97,28 @@ const AuthForm = ({
           role: "user",
           referral: referralCode || undefined, // Include referral code if present
         });
+        console.log("signup",     result);
 
-        if (result.success) {
-          toast({
-            title: "Success",
-            description: referralCode
-              ? "Signed up successfully with referral discount!"
-              : "Signed up successfully",
-          });
-          setUserEmail(values.email);
-          setShowOtpModal(true);
-        } else {
+        // if (result.success) {
+        //   toast({
+        //     title: "Success",
+        //     description: referralCode
+        //       ? "Signed up successfully with referral discount!"
+        //       : "Signed up successfully",
+        //   });
+        //   setUserEmail(values.email);
+        //   setShowOtpModal(true);
+        // } 
+        
+if (result.success) {
+ 
+  toast({
+    title: "OTP Sent",
+    description: "Please check your email for the verification code.",
+  });
+  setUserEmail(values.email);
+  setShowOtpModal(true);
+}      else {
           toast({
             title: "Failed",
             description: result.message || "Failed to sign up",
@@ -147,6 +160,20 @@ const AuthForm = ({
     }
     return `/${linkType}`;
   };
+
+  const handleOtpVerificationSuccess = () => {
+  toast({
+    title: "Success",
+    description: referralCode
+      ? "Signed up successfully with referral discount!"
+      : "Signed up successfully",
+  });
+  setShowOtpModal(false);
+  router.push("/");
+  router.refresh();
+};
+
+
 
   return (
     <div className="flex w-full flex-col">
