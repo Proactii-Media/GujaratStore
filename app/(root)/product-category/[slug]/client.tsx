@@ -123,7 +123,7 @@ const ProductCategoryClient = ({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-red-50/50">
+      <div className="min-h-screen bg-red-50/40">
         <BreadcrumbHeaderEnhanced
           items={[
             { label: "Home", href: "/" },
@@ -160,7 +160,7 @@ const ProductCategoryClient = ({
   }
 
   return (
-    <div className="min-h-screen bg-red-50/50">
+    <div className="min-h-screen bg-red-50/40">
       <BreadcrumbHeaderEnhanced
         items={[
           { label: "Home", href: "/" },
