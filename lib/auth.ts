@@ -40,7 +40,7 @@ export const sendEmailOTP = async (email: string, otp: string) => {
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Email Verification - The Gujarat Store</title>
+          <title>Email Verification - The Gujarat Store 11</title>
         </head>
         <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
           <table role="presentation" style="width: 100%; border-collapse: collapse;">
