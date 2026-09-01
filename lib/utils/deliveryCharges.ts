@@ -13,12 +13,13 @@ export const FREE_DELIVERY_THRESHOLD = 1500;
  */
 export const calculateDeliveryCharges = (
   subtotal: number,
-  originalDeliveryCharges: number
+  // originalDeliveryCharges: number
 ): number => {
   if (subtotal >= FREE_DELIVERY_THRESHOLD) {
     return 0; // Free delivery
   }
-  return originalDeliveryCharges;
+  // return originalDeliveryCharges;
+  return 120;
 };
 
 /**
