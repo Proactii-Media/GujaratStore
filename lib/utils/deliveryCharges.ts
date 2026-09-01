@@ -18,7 +18,6 @@ export const calculateDeliveryCharges = (
   if (subtotal >= FREE_DELIVERY_THRESHOLD) {
     return 0; // Free delivery
   }
-  // return originalDeliveryCharges;
   return 120;
 };
 
@@ -46,7 +45,7 @@ export const amountNeededForFreeDelivery = (subtotal: number): number => {
 /**
  * Format currency for display
  * @param amount - Amount to format
- * @returns Formatted currency string 
+ * @returns Formatted currency string
  */
 export const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-IN', {

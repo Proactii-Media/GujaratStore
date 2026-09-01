@@ -19,9 +19,9 @@ const FreeDeliveryIndicator: React.FC<FreeDeliveryIndicatorProps> = ({
   const deliveryInfo = getDeliveryStatusInfo(subtotal, originalDeliveryCharges);
 
   // Don't show if there are no delivery charges anyway
-  if (originalDeliveryCharges === 0) {
-    return null;
-  }
+  // if (originalDeliveryCharges === 0) {
+  //   return null;
+  // }
 
   const progressPercentage = deliveryInfo.isFree
     ? 100
